@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jamshid | Portfolio</title>
+    <title>ZHAM | Portfolio</title>
     <style>
         :root {
             --bg: #0d0d12;
@@ -13,28 +13,28 @@
             --subtext: #b0b0b0;
         }
 
-        /* Umumiy sozlamalar - Scroll ishlashi uchun */
         html, body {
             background-color: var(--bg);
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', sans-serif;
+            color: var(--text);
             width: 100%;
-            overflow-x: hidden; /* Yonga siljishni taqiqlaydi */
-            -webkit-overflow-scrolling: touch; /* iPhone uchun yumshoq scroll */
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: block;
             min-height: 100vh;
-            padding-top: 40px;
-            padding-bottom: 40px;
+            padding: 40px 0;
+            position: relative;
         }
 
-        /* FLASHBANG EFFEKTI */
-        #flash-toggle { display: none; }
+        /* YASHIRIN BOSHQARUVCHILAR (JS-siz logika) */
+        #flash-toggle, #final-toggle { display: none; }
+
+        /* 1. FLASHBANG LOGIKASI */
         #flash-toggle:checked ~ .flash-overlay {
             opacity: 1;
             visibility: visible;
@@ -54,30 +54,92 @@
             cursor: pointer;
         }
 
-        .main-container {
-            display: grid;
-            grid-template-columns: 1fr 1.8fr;
-            gap: 40px;
-            max-width: 1100px;
-            width: 90%;
-            position: relative;
+        /* 2. FINAL SAHIFASI LOGIKASI (Hamma narsani ochirish) */
+        #final-toggle:checked ~ .main-container .image-section,
+        #final-toggle:checked ~ .main-container .main-title,
+        #final-toggle:checked ~ .main-container .sub-title,
+        #final-toggle:checked ~ .main-container .menu-grid {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transform: translateY(-20px);
+            transition: all 0.8s ease;
         }
 
+        /* FINAL XABARI */
+        .limit-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1s ease 0.5s; /* Kechikish bilan chiqadi */
+            z-index: 10;
+        }
+
+        .limit-message h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ff4444;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin: 0;
+            text-shadow: 0 0 20px #ff4444;
+        }
+
+        #final-toggle:checked ~ .limit-message {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* FINALDA FOOTERNI O'ZGARTIRISH */
+        #final-toggle:checked ~ .footer {
+            position: fixed;
+            bottom: 40px;
+            left: 0;
+            width: 100%;
+            border: none;
+            margin: 0;
+            z-index: 20;
+        }
+        
+        #final-toggle:checked ~ .footer .social-link {
+            font-size: 1.2rem;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        /* ASOSIY DIZAYN */
+        .main-container {
+            display: block;
+            max-width: 1100px;
+            width: 90%;
+            margin: 0 auto;
+            transition: 0.5s;
+        }
+
+        .image-section { text-align: center; margin-bottom: 30px; transition: 0.5s; }
+        
         .profile-img {
             width: 100%;
-            max-width: 380px;
+            max-width: 350px;
             border-radius: 40px;
             border: 3px solid var(--accent);
             box-shadow: 0 0 30px rgba(127, 255, 212, 0.1);
         }
 
-        .main-title { color: var(--text); font-size: 3.5rem; margin: 0; font-weight: 900; }
-        .sub-title { color: var(--accent); font-size: 1rem; letter-spacing: 2px; margin-bottom: 30px; text-transform: uppercase; }
+        .right-section { text-align: center; }
+
+        .main-title { color: var(--text); font-size: 3rem; margin: 0; font-weight: 900; transition: 0.5s; }
+        .sub-title { color: var(--accent); font-size: 0.9rem; letter-spacing: 2px; margin: 10px 0 30px 0; text-transform: uppercase; transition: 0.5s; }
 
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            gap: 12px;
+            margin-bottom: 40px;
+            transition: 0.5s;
         }
 
         .btn {
@@ -93,6 +155,8 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            text-decoration: none;
+            color: var(--text);
         }
 
         .label, .highlight-text { opacity: 0; transform: translateY(10px); transition: 0.3s; }
@@ -101,48 +165,50 @@
         .label { font-size: 0.6rem; color: var(--subtext); text-transform: uppercase; margin-bottom: 5px; }
         .highlight-text { font-size: 1rem; font-weight: bold; color: var(--accent); }
 
-        /* RUNAWAY FAQAT KOMPYUTERDA ISHLAYDI */
-        @media (min-width: 1025px) {
-            .runaway-btn:hover {
-                transform: translate(100px, -50px) rotate(10deg) !important;
-                background: #ff4444 !important;
-                z-index: 100;
-            }
-        }
+        /* MAXSUS TUGMALAR DIZAYNI */
+        .final-btn { border: 2px dashed #ff4444 !important; }
+        .final-btn:hover { background: #ff4444 !important; border-color: #ff4444 !important; }
+        .final-btn:hover .highlight-text { color: white !important; }
 
         .footer {
-            margin-top: 50px;
             text-align: center;
-            width: 100%;
-            padding: 20px 0;
+            padding: 30px 0;
             border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 20px;
+            transition: 0.5s;
         }
 
-        .social-link { color: var(--subtext); text-decoration: none; font-size: 0.8rem; margin: 0 10px; }
+        .social-link { color: var(--subtext); text-decoration: none; font-size: 0.8rem; margin: 0 15px; font-weight: bold; transition: 0.3s; }
+        .social-link:hover { color: var(--accent); }
 
-        /* TELEFON UCHUN MOSLASHUV */
+        /* MOSLASHUV */
         @media screen and (max-width: 1024px) {
-            .main-container { grid-template-columns: 1fr; }
             .menu-grid { grid-template-columns: repeat(2, 1fr); }
-            .main-title { font-size: 2.5rem; }
-            /* Telefonda runawayni o'chiramiz, scroll muammosini yo'qotish uchun */
-            .runaway-btn:hover { transform: none; background: var(--card); }
+            .main-title { font-size: 2.2rem; }
+            .limit-message h2 { font-size: 1.8rem; letter-spacing: 2px; }
         }
     </style>
 </head>
 <body>
 
     <input type="checkbox" id="flash-toggle">
+    <input type="checkbox" id="final-toggle">
+
     <label for="flash-toggle" class="flash-overlay"></label>
+
+    <div class="limit-message">
+        <h2>SIMULATION ENDED</h2>
+        <p style="color: #555; font-size: 0.8rem;">(Refresh to recover)</p>
+    </div>
 
     <div class="main-container">
         <div class="image-section">
-            <img src="IMG_20260329_013912_893.jpg" class="profile-img" alt="Jamshid">
+            <img src="IMG_20260329_013912_893.jpg" class="profile-img" alt="Zham">
         </div>
 
         <div class="right-section">
-            <h1 class="main-title">JAMSHID</h1>
-            <p class="sub-title">Tap to explore</p>
+            <h1 class="main-title">Jamshid</h1>
+            <p class="sub-title">Tap to reveal my world</p>
             
             <div class="menu-grid">
                 <div class="btn"><span class="label">First Name</span><span class="highlight-text">Ablakimov</span></div>
@@ -151,17 +217,25 @@
                 <div class="btn"><span class="label">Profession</span><span class="highlight-text">UI/UX Designer</span></div>
                 <div class="btn"><span class="label">Hobby</span><span class="highlight-text">Video Editing</span></div>
 
+                <label for="flash-toggle" class="btn">
+                    <span class="label">Personal</span>
+                    <span class="highlight-text">Vision</span>
+                </label>
+
                 <div class="btn"><span class="label">Birthday</span><span class="highlight-text">20.07.2008</span></div>
                 <div class="btn"><span class="label">Idol</span><span class="highlight-text">C. Ronaldo</span></div>
-                
-                <label for="flash-toggle" class="btn"><span class="label">❗</span><span class="highlight-text">Flashbang 😂</span></label>
-
                 <div class="btn"><span class="label">Director</span><span class="highlight-text">C. Nolan</span></div>
                 <div class="btn"><span class="label">Actor</span><span class="highlight-text">Jim Carrey</span></div>
                 <div class="btn"><span class="label">Artist</span><span class="highlight-text">d4vd</span></div>
                 <div class="btn"><span class="label">Food</span><span class="highlight-text">Somsa</span></div>
                 <div class="btn"><span class="label">Sport</span><span class="highlight-text">Football</span></div>
-                <div class="btn"><span class="label">Number</span><span class="highlight-text">27</span></div>
+                
+                <div class="btn"><span class="label">Favorite No</span><span class="highlight-text">27</span></div>
+
+                <label for="final-toggle" class="btn final-btn">
+                    <span class="label">System</span>
+                    <span class="highlight-text">The End</span>
+                </label>
             </div>
         </div>
     </div>
@@ -169,7 +243,7 @@
     <div class="footer">
         <a href="https://t.me/jamwid_unvrsl" class="social-link" target="_blank">TELEGRAM</a>
         <a href="https://instagram.com/zham.99" class="social-link" target="_blank">INSTAGRAM</a>
-        <p style="color: #444; font-size: 0.6rem; margin-top: 10px;">© 2026 JAMSHID UNVRSL</p>
+        <p style="color: #333; font-size: 0.6rem; margin-top: 15px;">© 2026 JAMWID.UNVRSL</p>
     </div>
 
 </body>
