@@ -30,7 +30,19 @@
         }
 
         .right-section { padding-left: 40px; }
-        .main-title { color: #ffffff; font-size: 3.5rem; margin-bottom: 30px; font-weight: 900; letter-spacing: -1px; }
+        .main-title { color: #ffffff; font-size: 3.5rem; margin: 0; font-weight: 900; letter-spacing: -1px; }
+        
+        /* YANGI QO'SHILGAN YOZUV USLUBI */
+        .sub-title { 
+            color: aquamarine; 
+            font-size: 1rem; 
+            margin: 10px 0 30px 0; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            font-weight: 500;
+            opacity: 0.8;
+            text-shadow: 0 0 10px rgba(127, 255, 212, 0.3);
+        }
 
         .menu-grid {
             display: grid;
@@ -38,7 +50,6 @@
             gap: 15px;
         }
 
-        /* TUGMALAR ASOSIY HOLATI */
         .btn {
             background-color: #1a1a1e;
             border: 2px solid rgba(127, 255, 212, 0.1);
@@ -54,14 +65,12 @@
             outline: none;
         }
 
-        /* YOZUVLAR YASHIRIN HOLATI */
         .label, .highlight-text {
-            opacity: 0; /* Ko'rinmaydi */
+            opacity: 0;
             transform: translateY(10px);
             transition: all 0.3s ease;
         }
 
-        /* KOMPYUTERDA SICHQONCHA BORSA YOKI TELEFONDA BOSILGANDA */
         .btn:hover, .btn:focus {
             background-color: #222226;
             transform: scale(1.08);
@@ -69,7 +78,6 @@
             box-shadow: 0 0 20px rgba(127, 255, 212, 0.6), inset 0 0 10px rgba(127, 255, 212, 0.2);
         }
 
-        /* BOSILGANDA YOZUVLAR CHIQISHI */
         .btn:hover .label, .btn:focus .label {
             opacity: 0.6;
             transform: translateY(0);
@@ -85,12 +93,11 @@
         .label { font-size: 0.65rem; color: #ffffff; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px; }
         .highlight-text { font-size: 1.1rem; font-weight: bold; }
 
-        /* TELEFON UCHUN MOSLASHUV */
         @media screen and (max-width: 1024px) {
             body { grid-template-columns: 1fr; padding: 20px; text-align: center; }
             .right-section { padding-left: 0; margin-top: 30px; }
             .menu-grid { grid-template-columns: repeat(2, 1fr); }
-            .main-title { font-size: 2.5rem; }
+            .main-title { font-size: 2.8rem; }
         }
     </style>
 </head>
@@ -101,7 +108,8 @@
     </div>
 
     <div class="right-section">
-        <h1 class="main-title">Tap to Reveal</h1>
+        <h1 class="main-title">All About Me</h1>
+        <p class="sub-title">Tap the cards to explore my world</p>
         
         <div class="menu-grid">
             <div class="btn" tabindex="0"><span class="label">Name</span><span class="highlight-text">Jamshid</span></div>
@@ -112,6 +120,8 @@
             <div class="btn" tabindex="0"><span class="label">Hobby</span><span class="highlight-text">Editing</span></div>
             <div class="btn" tabindex="0"><span class="label">Birthday</span><span class="highlight-text">20.07.2008</span></div>
             <div class="btn" tabindex="0"><span class="label">Food</span><span class="highlight-text">Somsa</span></div>
+            <div class="btn" tabindex="0"><span class="label">Number</span><span class="highlight-text">27</span></div>
+            <div class="btn" tabindex="0"><span class="label">Director</span><span class="highlight-text">C. Nolan</span></div>
             <div class="btn" tabindex="0"><span class="label">Sport</span><span class="highlight-text">Football</span></div>
         </div>
     </div>
