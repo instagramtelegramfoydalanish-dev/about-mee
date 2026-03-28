@@ -2,129 +2,119 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>About Me</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me | Interactive</title>
     <style>
         body {
             background: linear-gradient(135deg, #0d0d12 0%, #17171e 100%);
             color: #b0b0b0;
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: grid;
             grid-template-columns: 1fr 1.5fr;
             align-items: center;
             padding: 0 50px;
-            overflow: hidden;
+            overflow-x: hidden;
         }
-        .image-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+
+        .image-container { display: flex; justify-content: center; align-items: center; }
+        
         .profile-img {
             width: 80%;
-            max-width: 400px;
+            max-width: 380px;
             border-radius: 30px;
-            border: 3px solid rgba(127, 255, 212, 0.6);
-            box-shadow: 0 0 25px rgba(127, 255, 212, 0.4), 0 0 50px rgba(127, 255, 212, 0.2);
+            border: 3px solid rgba(127, 255, 212, 0.3);
+            box-shadow: 0 0 20px rgba(127, 255, 212, 0.1);
             transition: all 0.5s ease;
         }
-        .profile-img:hover {
-            transform: scale(1.02);
-            border: 3px solid rgba(127, 255, 212, 1);
-            box-shadow: 0 0 35px rgba(127, 255, 212, 0.7), 0 0 70px rgba(127, 255, 212, 0.5);
-        }
-        .right-section {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-left: 40px;
-        }
-        .main-title {
-            color: #ffffff;
-            font-size: 4rem;
-            margin: 0 0 30px 0;
-            font-weight: 900;
-            letter-spacing: -2px;
-            text-shadow: 0 0 10px rgba(255,255,255,0.2);
-        }
+
+        .right-section { padding-left: 40px; }
+        .main-title { color: #ffffff; font-size: 3.5rem; margin-bottom: 30px; font-weight: 900; letter-spacing: -1px; }
+
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 15px;
         }
+
+        /* TUGMALAR ASOSIY HOLATI */
         .btn {
             background-color: #1a1a1e;
-            border: 2px solid rgba(127, 255, 212, 0.5);
+            border: 2px solid rgba(127, 255, 212, 0.1);
             border-radius: 18px;
-            padding: 25px 15px;
+            padding: 25px 10px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.4s ease;
-            font-weight: bold;
-            color: #ffffff;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 15px rgba(127, 255, 212, 0.2);
+            outline: none;
         }
-        .btn:hover {
+
+        /* YOZUVLAR YASHIRIN HOLATI */
+        .label, .highlight-text {
+            opacity: 0; /* Ko'rinmaydi */
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        /* KOMPYUTERDA SICHQONCHA BORSA YOKI TELEFONDA BOSILGANDA */
+        .btn:hover, .btn:focus {
             background-color: #222226;
-            transform: scale(1.03);
-            border-color: rgba(127, 255, 212, 0.1);
-            box-shadow: none;
-            color: #888;
+            transform: scale(1.08);
+            border-color: rgba(127, 255, 212, 1);
+            box-shadow: 0 0 20px rgba(127, 255, 212, 0.6), inset 0 0 10px rgba(127, 255, 212, 0.2);
         }
-        .label {
-            font-size: 0.7rem;
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+
+        /* BOSILGANDA YOZUVLAR CHIQISHI */
+        .btn:hover .label, .btn:focus .label {
+            opacity: 0.6;
+            transform: translateY(0);
         }
-        .highlight-text {
+
+        .btn:hover .highlight-text, .btn:focus .highlight-text {
+            opacity: 1;
+            transform: translateY(0);
             color: aquamarine;
+            text-shadow: 0 0 10px aquamarine;
         }
+
+        .label { font-size: 0.65rem; color: #ffffff; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px; }
+        .highlight-text { font-size: 1.1rem; font-weight: bold; }
+
+        /* TELEFON UCHUN MOSLASHUV */
         @media screen and (max-width: 1024px) {
-            body {
-                grid-template-columns: 1fr;
-                padding: 30px;
-                height: auto;
-                overflow: auto;
-            }
-            .image-container { margin-bottom: 30px; margin-top: 20px; }
-            .profile-img { width: 70%; max-width: 300px; }
-            .right-section { padding-left: 0; align-items: center; text-align: center; }
-            .main-title { font-size: 3rem; }
-            .menu-grid { width: 100%; max-width: 700px; grid-template-columns: repeat(2, 1fr); }
-        }
-        @media screen and (max-width: 768px) {
-            .menu-grid { grid-template-columns: 1fr; }
+            body { grid-template-columns: 1fr; padding: 20px; text-align: center; }
+            .right-section { padding-left: 0; margin-top: 30px; }
+            .menu-grid { grid-template-columns: repeat(2, 1fr); }
+            .main-title { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
+
     <div class="image-container">
         <img src="IMG_20260329_013912_893.jpg" class="profile-img" alt="Jamshid">
     </div>
+
     <div class="right-section">
-        <h1 class="main-title">All About Me</h1>
+        <h1 class="main-title">Tap to Reveal</h1>
+        
         <div class="menu-grid">
-            <div class="btn"><span class="label">First Name</span><span class="highlight-text">Ablakimov</span></div>
-            <div class="btn"><span class="label">Last Name</span><span class="highlight-text">Jamshid</span></div>
-            <div class="btn"><span class="label">Age</span><span class="highlight-text">17</span></div>
-            <div class="btn"><span class="label">Artist</span><span class="highlight-text">d4vd</span></div>
-            <div class="btn"><span class="label">Actor</span><span class="highlight-text">Jim Carrey</span></div>
-            <div class="btn"><span class="label">Director</span><span class="highlight-text">C. Nolan</span></div>
-            <div class="btn"><span class="label">Profession</span><span class="highlight-text">UI/UX Designer</span></div>
-            <div class="btn"><span class="label">Hobby</span><span class="highlight-text">Video Editing</span></div>
-            <div class="btn"><span class="label">Birthday</span><span class="highlight-text">20.07.2008</span></div>
-            <div class="btn"><span class="label">Color</span><span class="highlight-text">Aqua</span></div>
-            <div class="btn"><span class="label">Food</span><span class="highlight-text">Somsa</span></div>
-            <div class="btn"><span class="label">Sport</span><span class="highlight-text">Football</span></div>
+            <div class="btn" tabindex="0"><span class="label">Name</span><span class="highlight-text">Jamshid</span></div>
+            <div class="btn" tabindex="0"><span class="label">Age</span><span class="highlight-text">17</span></div>
+            <div class="btn" tabindex="0"><span class="label">Artist</span><span class="highlight-text">d4vd</span></div>
+            <div class="btn" tabindex="0"><span class="label">Actor</span><span class="highlight-text">Jim Carrey</span></div>
+            <div class="btn" tabindex="0"><span class="label">Profession</span><span class="highlight-text">UI/UX</span></div>
+            <div class="btn" tabindex="0"><span class="label">Hobby</span><span class="highlight-text">Editing</span></div>
+            <div class="btn" tabindex="0"><span class="label">Birthday</span><span class="highlight-text">20.07.2008</span></div>
+            <div class="btn" tabindex="0"><span class="label">Food</span><span class="highlight-text">Somsa</span></div>
+            <div class="btn" tabindex="0"><span class="label">Sport</span><span class="highlight-text">Football</span></div>
         </div>
     </div>
+
 </body>
 </html>
