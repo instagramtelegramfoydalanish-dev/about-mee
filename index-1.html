@@ -13,17 +13,7 @@
             --subtext: #b0b0b0;
         }
 
-        /* DARK/LIGHT MODE LOGIKASI */
-        #mode-toggle { display: none; }
-        #mode-toggle:checked ~ .main-container {
-            --bg: #f0f0f5;
-            --card: #ffffff;
-            --text: #1a1a1e;
-            --accent: #008080;
-            --subtext: #555;
-        }
-
-        /* FLASHBANG EFFEKTI (Checkbox orqali) */
+        /* FLASHBANG LOGIKASI */
         #flash-toggle { display: none; }
         #flash-toggle:checked ~ .flash-overlay {
             opacity: 1;
@@ -34,15 +24,14 @@
             background-color: var(--bg);
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            transition: 0.5s;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
-        /* FLASHBANG EKRANI */
+        /* PRANK EKRANI */
         .flash-overlay {
             position: fixed;
             top: 0;
@@ -53,19 +42,14 @@
             z-index: 9999;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.1s ease-in;
+            transition: opacity 0.05s steps(1); /* Birdan chiqishi uchun */
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-        }
-
-        .flash-overlay::after {
-            content: "FLASHED! (Tap to recover)";
-            color: #000;
-            font-weight: 900;
-            font-size: 2rem;
-            letter-spacing: 5px;
+            /* Chetidagi chiziqlar - tugmani topish uchun */
+            border: 15px solid rgba(0,0,0,0.03);
+            box-sizing: border-box;
         }
 
         .main-container {
@@ -75,18 +59,14 @@
             max-width: 1200px;
             width: 95%;
             padding: 40px;
-            background: var(--bg);
-            transition: 0.5s;
         }
 
-        .image-section { display: flex; justify-content: center; align-items: center; }
-        
         .profile-img {
             width: 100%;
             max-width: 380px;
             border-radius: 40px;
             border: 3px solid var(--accent);
-            box-shadow: 0 0 30px rgba(127, 255, 212, 0.2);
+            box-shadow: 0 0 30px rgba(127, 255, 212, 0.1);
         }
 
         .main-title { color: var(--text); font-size: 3.5rem; margin: 0; font-weight: 900; }
@@ -105,26 +85,22 @@
             padding: 25px 10px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
-            overflow: hidden;
         }
 
-        /* CARD HOVER EFFEKTI */
         .label, .highlight-text {
             opacity: 0;
             transform: translateY(10px);
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
         .btn:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
             border-color: var(--accent);
-            box-shadow: 0 0 20px var(--accent);
         }
 
         .btn:hover .label, .btn:hover .highlight-text {
@@ -135,25 +111,18 @@
         .label { font-size: 0.65rem; color: var(--subtext); text-transform: uppercase; margin-bottom: 5px; }
         .highlight-text { font-size: 1.1rem; font-weight: bold; color: var(--accent); }
 
-        /* FLASHBANG TUGMASI (O'ZGARCHA DIZAYN) */
-        .flash-btn { border: 2px solid #ff4444 !important; }
-        .flash-btn .highlight-text { color: #ff4444 !important; text-shadow: 0 0 10px #ff4444; }
-
-        .footer { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
-        .social-link { color: var(--text); text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: 0.3s; }
-        .social-link:hover { color: var(--accent); }
+        .footer { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
+        .social-link { color: var(--subtext); text-decoration: none; font-size: 0.8rem; }
 
         @media screen and (max-width: 1024px) {
-            .main-container { grid-template-columns: 1fr; text-align: center; padding: 20px; }
+            .main-container { grid-template-columns: 1fr; text-align: center; }
             .menu-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
 
-    <input type="checkbox" id="mode-toggle">
     <input type="checkbox" id="flash-toggle">
-
     <label for="flash-toggle" class="flash-overlay"></label>
 
     <div class="main-container">
@@ -171,13 +140,12 @@
                 <div class="btn"><span class="label">Age</span><span class="highlight-text">17</span></div>
                 
                 <div class="btn"><span class="label">Profession</span><span class="highlight-text">UI/UX Designer</span></div>
-                
-                <label for="flash-toggle" class="btn flash-btn">
-                    <span class="label" style="opacity:1; transform:none;">Special</span>
-                    <span class="highlight-text" style="opacity:1; transform:none;">FLASHBANG</span>
-                </label>
-
                 <div class="btn"><span class="label">Hobby</span><span class="highlight-text">Video Editing</span></div>
+
+                <label for="flash-toggle" class="btn">
+                    <span class="label">Personal</span>
+                    <span class="highlight-text">Vision</span>
+                </label>
 
                 <div class="btn"><span class="label">Birthday</span><span class="highlight-text">20.07.2008</span></div>
                 <div class="btn"><span class="label">Idol</span><span class="highlight-text">C. Ronaldo</span></div>
@@ -189,19 +157,15 @@
 
                 <div class="btn"><span class="label">Sport</span><span class="highlight-text">Football</span></div>
                 <div class="btn"><span class="label">Favorite No</span><span class="highlight-text">27</span></div>
-                
-                <label for="mode-toggle" class="btn" style="border: 2px dashed var(--accent);">
-                    <span class="label">Theme</span>
-                    <span class="highlight-text">Dark / Light</span>
-                </label>
+                <div class="btn"><span class="label">Color</span><span class="highlight-text">Aqua</span></div>
             </div>
         </div>
 
         <div class="footer">
-            <div style="color: var(--subtext); font-size: 0.8rem;">© 2026 | JAMSHID PORTFOLIO</div>
+            <div style="color: #444; font-size: 0.7rem;">© 2026 | JAMSHID UNVRSL</div>
             <div>
-                <a href="https://t.me/jamwid_unvrsl" class="social-link" target="_blank">TELEGRAM</a> &nbsp; | &nbsp;
-                <a href="https://instagram.com/zham.99" class="social-link" target="_blank">INSTAGRAM</a>
+                <a href="https://t.me/jamwid_unvrsl" class="social-link" target="_blank">TG</a> &nbsp; | &nbsp;
+                <a href="https://instagram.com/zham.99" class="social-link" target="_blank">IG</a>
             </div>
         </div>
     </div>
