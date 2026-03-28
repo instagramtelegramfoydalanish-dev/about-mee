@@ -15,8 +15,7 @@
 
         html, body {
             background-color: var(--bg);
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Segoe UI', sans-serif;
             color: var(--text);
             width: 100%;
@@ -24,168 +23,78 @@
             scroll-behavior: smooth;
         }
 
-        body {
-            display: block;
-            min-height: 100vh;
-            padding: 40px 0;
-            position: relative;
-        }
+        body { display: block; min-height: 100vh; padding: 40px 0; position: relative; }
 
-        /* YASHIRIN BOSHQARUVCHILAR (JS-siz logika) */
+        /* YASHIRIN LOGIKA */
         #flash-toggle, #final-toggle { display: none; }
 
-        /* 1. FLASHBANG LOGIKASI */
-        #flash-toggle:checked ~ .flash-overlay {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        /* 1. FLASHBANG */
+        #flash-toggle:checked ~ .flash-overlay { opacity: 1; visibility: visible; }
         .flash-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            z-index: 9999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white;
+            z-index: 9999; opacity: 0; visibility: hidden; transition: opacity 0.05s steps(1); cursor: pointer;
+        }
+
+        /* 2. VOID REACHED (FINAL) */
+        #final-toggle:checked ~ .main-container {
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.05s steps(1);
-            cursor: pointer;
+            transform: scale(0.95);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* 2. FINAL SAHIFASI LOGIKASI (Hamma narsani ochirish) */
-        #final-toggle:checked ~ .main-container .image-section,
-        #final-toggle:checked ~ .main-container .main-title,
-        #final-toggle:checked ~ .main-container .sub-title,
-        #final-toggle:checked ~ .main-container .menu-grid {
-            opacity: 0 !important;
-            visibility: hidden !important;
-            transform: translateY(-20px);
-            transition: all 0.8s ease;
-        }
-
-        /* FINAL XABARI */
         .limit-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 1s ease 0.5s; /* Kechikish bilan chiqadi */
-            z-index: 10;
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center; opacity: 0; visibility: hidden; 
+            transition: all 1s ease 0.6s; z-index: 10; width: 90%;
         }
-
-        .limit-message h2 {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #ff4444;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin: 0;
-            text-shadow: 0 0 20px #ff4444;
+        .limit-message h2 { 
+            font-size: 3.5rem; font-weight: 900; color: var(--text); 
+            letter-spacing: 8px; margin: 0; text-shadow: 0 0 15px rgba(255,255,255,0.3);
         }
+        .limit-message p { color: var(--subtext); font-size: 1rem; margin-top: 20px; letter-spacing: 1px; }
 
-        #final-toggle:checked ~ .limit-message {
-            opacity: 1;
-            visibility: visible;
-        }
+        #final-toggle:checked ~ .limit-message { opacity: 1; visibility: visible; }
 
-        /* FINALDA FOOTERNI O'ZGARTIRISH */
+        /* FINALDA FOOTERNI FIX QILISH */
         #final-toggle:checked ~ .footer {
-            position: fixed;
-            bottom: 40px;
-            left: 0;
-            width: 100%;
-            border: none;
-            margin: 0;
-            z-index: 20;
+            position: fixed; bottom: 40px; left: 0; width: 100%; border: none; z-index: 20;
         }
-        
-        #final-toggle:checked ~ .footer .social-link {
-            font-size: 1.2rem;
-            color: var(--accent);
-            text-shadow: 0 0 10px var(--accent);
-        }
+        #final-toggle:checked ~ .footer .social-link { color: var(--accent); font-size: 1rem; text-shadow: 0 0 8px var(--accent); }
 
         /* ASOSIY DIZAYN */
-        .main-container {
-            display: block;
-            max-width: 1100px;
-            width: 90%;
-            margin: 0 auto;
-            transition: 0.5s;
-        }
+        .main-container { max-width: 1100px; width: 90%; margin: 0 auto; transition: 0.5s; }
+        .image-section { text-align: center; margin-bottom: 30px; }
+        .profile-img { width: 100%; max-width: 350px; border-radius: 40px; border: 3px solid var(--accent); box-shadow: 0 0 30px rgba(127, 255, 212, 0.1); }
+        .main-title { font-size: 3.2rem; margin: 0; font-weight: 900; letter-spacing: -1px; }
+        .sub-title { color: var(--accent); font-size: 0.9rem; margin: 10px 0 30px 0; text-transform: uppercase; letter-spacing: 2px; }
 
-        .image-section { text-align: center; margin-bottom: 30px; transition: 0.5s; }
-        
-        .profile-img {
-            width: 100%;
-            max-width: 350px;
-            border-radius: 40px;
-            border: 3px solid var(--accent);
-            box-shadow: 0 0 30px rgba(127, 255, 212, 0.1);
-        }
-
-        .right-section { text-align: center; }
-
-        .main-title { color: var(--text); font-size: 3rem; margin: 0; font-weight: 900; transition: 0.5s; }
-        .sub-title { color: var(--accent); font-size: 0.9rem; letter-spacing: 2px; margin: 10px 0 30px 0; text-transform: uppercase; transition: 0.5s; }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 40px;
-            transition: 0.5s;
-        }
+        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 40px; }
 
         .btn {
-            background-color: var(--card);
-            border: 1px solid rgba(127, 255, 212, 0.1);
-            border-radius: 20px;
-            padding: 25px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            text-decoration: none;
-            color: var(--text);
+            background-color: var(--card); border: 1px solid rgba(127, 255, 212, 0.1);
+            border-radius: 20px; padding: 25px 10px; text-align: center; cursor: pointer;
+            transition: 0.3s; display: flex; flex-direction: column; align-items: center; position: relative;
         }
+        .btn:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
 
-        .label, .highlight-text { opacity: 0; transform: translateY(10px); transition: 0.3s; }
-        .btn:hover { border-color: var(--accent); transform: scale(1.03); }
-        .btn:hover .label, .btn:hover .highlight-text { opacity: 1; transform: translateY(0); }
-        .label { font-size: 0.6rem; color: var(--subtext); text-transform: uppercase; margin-bottom: 5px; }
+        .label { font-size: 0.6rem; color: var(--subtext); text-transform: uppercase; margin-bottom: 5px; opacity: 0.7; }
         .highlight-text { font-size: 1rem; font-weight: bold; color: var(--accent); }
 
-        /* MAXSUS TUGMALAR DIZAYNI */
-        .final-btn { border: 2px dashed #ff4444 !important; }
-        .final-btn:hover { background: #ff4444 !important; border-color: #ff4444 !important; }
-        .final-btn:hover .highlight-text { color: white !important; }
+        /* THE END TUGMASI - O'RTADA */
+        .end-wrapper { grid-column: span 3; display: flex; justify-content: center; margin-top: 10px; }
+        .end-btn { width: 40%; border: 1px solid rgba(255,255,255,0.1); }
 
-        .footer {
-            text-align: center;
-            padding: 30px 0;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 20px;
-            transition: 0.5s;
-        }
-
+        .footer { text-align: center; padding: 30px 0; border-top: 1px solid #1a1a1e; margin-top: 20px; transition: 0.5s; }
         .social-link { color: var(--subtext); text-decoration: none; font-size: 0.8rem; margin: 0 15px; font-weight: bold; transition: 0.3s; }
         .social-link:hover { color: var(--accent); }
 
-        /* MOSLASHUV */
         @media screen and (max-width: 1024px) {
             .menu-grid { grid-template-columns: repeat(2, 1fr); }
-            .main-title { font-size: 2.2rem; }
-            .limit-message h2 { font-size: 1.8rem; letter-spacing: 2px; }
+            .end-wrapper { grid-column: span 2; }
+            .end-btn { width: 100%; }
+            .main-title { font-size: 2.5rem; }
+            .limit-message h2 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -197,8 +106,8 @@
     <label for="flash-toggle" class="flash-overlay"></label>
 
     <div class="limit-message">
-        <h2>SIMULATION ENDED</h2>
-        <p style="color: #555; font-size: 0.8rem;">(Refresh to recover)</p>
+        <h2>VOID REACHED</h2>
+        <p>I hope you remembered all of this.</p>
     </div>
 
     <div class="main-container">
@@ -208,42 +117,47 @@
 
         <div class="right-section">
             <h1 class="main-title">Jamshid</h1>
-            <p class="sub-title">Tap to reveal my world</p>
+            <p class="sub-title">Exploring the digital universe</p>
             
             <div class="menu-grid">
                 <div class="btn"><span class="label">First Name</span><span class="highlight-text">Ablakimov</span></div>
                 <div class="btn"><span class="label">Last Name</span><span class="highlight-text">Jamshid</span></div>
                 <div class="btn"><span class="label">Age</span><span class="highlight-text">17</span></div>
+                
                 <div class="btn"><span class="label">Profession</span><span class="highlight-text">UI/UX Designer</span></div>
                 <div class="btn"><span class="label">Hobby</span><span class="highlight-text">Video Editing</span></div>
 
                 <label for="flash-toggle" class="btn">
                     <span class="label">Personal</span>
-                    <span class="highlight-text">Flashbang 😂</span>
+                    <span class="highlight-text">flashbang</span>
                 </label>
 
                 <div class="btn"><span class="label">Birthday</span><span class="highlight-text">20.07.2008</span></div>
                 <div class="btn"><span class="label">Idol</span><span class="highlight-text">C. Ronaldo</span></div>
                 <div class="btn"><span class="label">Director</span><span class="highlight-text">C. Nolan</span></div>
+
                 <div class="btn"><span class="label">Actor</span><span class="highlight-text">Jim Carrey</span></div>
                 <div class="btn"><span class="label">Artist</span><span class="highlight-text">d4vd</span></div>
                 <div class="btn"><span class="label">Food</span><span class="highlight-text">Somsa</span></div>
-                <div class="btn"><span class="label">Sport</span><span class="highlight-text">Football</span></div>
-                
-                <div class="btn"><span class="label">Favorite No</span><span class="highlight-text">27</span></div>
 
-                <label for="final-toggle" class="btn final-btn">
-                    <span class="label">System</span>
-                    <span class="highlight-text">The End</span>
-                </label>
+                <div class="btn"><span class="label">Sport</span><span class="highlight-text">Football</span></div>
+                <div class="btn"><span class="label">Favorite No</span><span class="highlight-text">27</span></div>
+                <div class="btn"><span class="label">Theme</span><span class="highlight-text">Aqua Dark</span></div>
+
+                <div class="end-wrapper">
+                    <label for="final-toggle" class="btn end-btn">
+                        <span class="label">System</span>
+                        <span class="highlight-text">THE END</span>
+                    </label>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="footer">
         <a href="https://t.me/jamwid_unvrsl" class="social-link" target="_blank">TELEGRAM</a>
-        <a href="https://instagram.com/zham.99" class="social-link" target="_blank">INSTAGRAM</a>
-        <p style="color: #333; font-size: 0.6rem; margin-top: 15px;">© 2026 | JAMWID.UNVRSL BUILD WITH PASSION</p>
+        <a href="https://instagram.com/zham.99" class="social-link" target="_blank">INSTAGRAM </a>
+        <p style="color: #222; font-size: 0.6rem; margin-top: 15px;">© 2026 ZHAM UNVRSL</p>
     </div>
 
 </body>
