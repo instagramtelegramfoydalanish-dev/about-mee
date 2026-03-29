@@ -25,7 +25,7 @@
         body { display: block; min-height: 100vh; padding: 50px 0; }
         .hide-input { display: none; }
 
-        /* VOID REACHED (FINAL) */
+        /* VOID REACHED (FINAL SCREEN) */
         #final-toggle:checked ~ .main-container {
             opacity: 0; visibility: hidden; transform: scale(0.95); transition: 1s ease;
         }
@@ -37,7 +37,7 @@
         .limit-message p { color: var(--subtext); font-size: 1.1rem; margin-top: 20px; }
         #final-toggle:checked ~ .limit-message { opacity: 1; visibility: visible; }
 
-        /* ASOSIY DIZAYN */
+        /* ASOSIY KONTEYNER */
         .main-container { max-width: 1000px; width: 90%; margin: 0 auto; transition: 0.8s; }
         .image-section { text-align: center; margin-bottom: 20px; }
         .profile-img { 
@@ -53,27 +53,41 @@
 
         .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
 
+        /* TUGMALAR */
         .btn {
             background-color: var(--card); border: 1px solid #222; border-radius: 20px; padding: 25px 10px;
             text-align: center; cursor: pointer; display: flex; flex-direction: column; justify-content: center;
             transition: all 0.4s ease; box-shadow: var(--neon-shadow); position: relative;
         }
-        .btn:hover { box-shadow: 0 0 5px rgba(127, 255, 212, 0.1); border-color: #444; transform: translateY(-2px); }
+        .btn:hover { box-shadow: 0 0 5px rgba(127, 255, 212, 0.1); border-color: #444; }
 
         .label, .val { opacity: 0; transform: translateY(10px); transition: 0.3s; }
 
-        .hide-input:checked + .btn { opacity: 0; transform: scale(0.8); pointer-events: none; box-shadow: none; }
-        .hide-input:checked + .btn .label, .hide-input:checked + .btn .val { opacity: 1; transform: translateY(0); }
+        /* ZANJIR LOGIKASI: Birini bossa, oldingisi yo'qoladi */
+        /* Radio button ishlatamiz, shunda faqat bittasi aktiv bo'ladi */
+        .hide-input:checked + .btn {
+            background: transparent;
+            border-color: transparent;
+            box-shadow: none;
+            cursor: default;
+        }
+        .hide-input:checked + .btn .label, 
+        .hide-input:checked + .btn .val {
+            opacity: 1;
+            transform: translateY(0);
+            color: var(--accent);
+        }
+
+        /* THE END - Qolganlari bilan bir xil ko'rinadi */
+        .end-wrapper { grid-column: 2 / 3; margin-top: 20px; }
+        .end-btn { border: 1px solid #222; } /* dashed olib tashlandi */
 
         .label { font-size: 0.6rem; color: var(--subtext); text-transform: uppercase; margin-bottom: 5px; }
-        .val { font-size: 1.1rem; font-weight: bold; color: var(--accent); }
-
-        .end-wrapper { grid-column: 2 / 3; margin-top: 20px; }
-        .end-btn { border: 1px dashed var(--accent); box-shadow: 0 0 10px rgba(127, 255, 212, 0.1); }
+        .val { font-size: 1.1rem; font-weight: bold; }
 
         .footer { text-align: center; padding: 40px 0; border-top: 1px solid #111; margin-top: 50px; }
-        .social-link { color: var(--subtext); text-decoration: none; font-size: 0.8rem; margin: 0 15px; font-weight: bold; transition: 0.3s; }
-        .social-link:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+        .social-link { color: var(--subtext); text-decoration: none; font-size: 0.8rem; margin: 0 15px; font-weight: bold; }
+        .social-link:hover { color: var(--accent); }
 
         @media screen and (max-width: 900px) {
             .menu-grid { grid-template-columns: repeat(2, 1fr); }
@@ -97,30 +111,27 @@
         </div>
 
         <h1 class="main-title">JAMSHID</h1>
-        <p class="sub-title">Tap to reveal my world</p>
+        <p class="sub-title">Step into the sequence</p>
         
         <div class="menu-grid">
-            <input type="checkbox" id="m1" class="hide-input"><label for="m1" class="btn"><span class="label">First Name</span><span class="val">Ablakimov</span></label>
-            <input type="checkbox" id="m2" class="hide-input"><label for="m2" class="btn"><span class="label">Last Name</span><span class="val">Jamshid</span></label>
-            <input type="checkbox" id="m3" class="hide-input"><label for="m3" class="btn"><span class="label">Age</span><span class="val">17</span></label>
+            <input type="radio" name="info" id="m1" class="hide-input"><label for="m1" class="btn"><span class="label">First Name</span><span class="val">Ablakimov</span></label>
+            <input type="radio" name="info" id="m2" class="hide-input"><label for="m2" class="btn"><span class="label">Last Name</span><span class="val">Jamshid</span></label>
+            <input type="radio" name="info" id="m3" class="hide-input"><label for="m3" class="btn"><span class="label">Age</span><span class="val">17</span></label>
             
-            <input type="checkbox" id="m4" class="hide-input"><label for="m4" class="btn"><span class="label">Profession</span><span class="val">UI/UX Designer</span></label>
-            <input type="checkbox" id="m5" class="hide-input"><label for="m5" class="btn"><span class="label">Hobby</span><span class="val">Video Editing</span></label>
-            <input type="checkbox" id="m6" class="hide-input"><label for="m6" class="btn"><span class="label">Birthday</span><span class="val">20.07.2008</span></label>
+            <input type="radio" name="info" id="m4" class="hide-input"><label for="m4" class="btn"><span class="label">Profession</span><span class="val">UI/UX Designer</span></label>
+            <input type="radio" name="info" id="m5" class="hide-input"><label for="m5" class="btn"><span class="label">Hobby</span><span class="val">Video Editing</span></label>
+            <input type="radio" name="info" id="m6" class="hide-input"><label for="m6" class="btn"><span class="label">Birthday</span><span class="val">20.07.2008</span></label>
 
-            <input type="checkbox" id="m7" class="hide-input"><label for="m7" class="btn"><span class="label">Idol</span><span class="val">C. Ronaldo</span></label>
-            <input type="checkbox" id="m8" class="hide-input"><label for="m8" class="btn"><span class="label">Director</span><span class="val">C. Nolan</span></label>
-            <input type="checkbox" id="m9" class="hide-input"><label for="m9" class="btn"><span class="label">Actor</span><span class="val">Jim Carrey</span></label>
+            <input type="radio" name="info" id="m7" class="hide-input"><label for="m7" class="btn"><span class="label">Idol</span><span class="val">C. Ronaldo</span></label>
+            <input type="radio" name="info" id="m8" class="hide-input"><label for="m8" class="btn"><span class="label">Director</span><span class="val">C. Nolan</span></label>
+            <input type="radio" name="info" id="m9" class="hide-input"><label for="m9" class="btn"><span class="label">Actor</span><span class="val">Jim Carrey</span></label>
 
-            <input type="checkbox" id="m10" class="hide-input"><label for="m10" class="btn"><span class="label">Artist</span><span class="val">d4vd</span></label>
-            <input type="checkbox" id="m11" class="hide-input"><label for="m11" class="btn"><span class="label">Food</span><span class="val">Somsa</span></label>
-            <input type="checkbox" id="m12" class="hide-input"><label for="m12" class="btn"><span class="label">Sport</span><span class="val">Football</span></label>
+            <input type="radio" name="info" id="m10" class="hide-input"><label for="m10" class="btn"><span class="label">Artist</span><span class="val">d4vd</span></label>
+            <input type="radio" name="info" id="m11" class="hide-input"><label for="m11" class="btn"><span class="label">Food</span><span class="val">Somsa</span></label>
+            <input type="radio" name="info" id="m12" class="hide-input"><label for="m12" class="btn"><span class="label">Sport</span><span class="val">Football</span></label>
 
-            <input type="checkbox" id="m13" class="hide-input"><label for="m13" class="btn"><span class="label">Favorite No</span><span class="val">27</span></label>
-            <input type="checkbox" id="m14" class="hide-input"><label for="m14" class="btn"><span class="label">Status</span><span class="val">Active</span></label>
-            <input type="checkbox" id="m15" class="hide-input"><label for="m15" class="btn"><span class="label">Vibe</span><span class="val">Minimal</span></label>
-
-            <div class="end-wrapper">
+            <input type="radio" name="info" id="m13" class="hide-input"><label for="m13" class="btn"><span class="label">Favorite No</span><span class="val">27</span></label>
+                        <div class="end-wrapper">
                 <label for="final-toggle" class="btn end-btn">
                     <span class="label">System</span><span class="val">THE END</span>
                 </label>
