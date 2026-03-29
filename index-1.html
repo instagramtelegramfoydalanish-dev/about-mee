@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZHAM | Portfolio</title>
+    <title>ZHAM | Void Portfolio</title>
     <style>
         :root {
-            --bg: #0d0d12;
-            --card: #1a1a1e;
+            --bg: #0a0a0e;
+            --card: #16161a;
             --text: #ffffff;
             --accent: aquamarine;
-            --subtext: #b0b0b0;
+            --subtext: #777;
         }
 
         html, body {
             background-color: var(--bg);
             margin: 0; padding: 0;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text);
-            width: 100%;
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
-        body { display: block; min-height: 100vh; padding: 40px 0; position: relative; }
+        body { display: block; min-height: 100vh; padding: 50px 0; }
 
         /* YASHIRIN LOGIKA */
         #flash-toggle, #final-toggle { display: none; }
@@ -32,69 +30,83 @@
         #flash-toggle:checked ~ .flash-overlay { opacity: 1; visibility: visible; }
         .flash-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white;
-            z-index: 9999; opacity: 0; visibility: hidden; transition: opacity 0.05s steps(1); cursor: pointer;
+            z-index: 9999; opacity: 0; visibility: hidden; transition: 0.1s; cursor: pointer;
         }
 
         /* 2. VOID REACHED (FINAL) */
         #final-toggle:checked ~ .main-container {
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(0.95);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0; visibility: hidden; transform: scale(0.9); transition: 1s ease;
         }
-
         .limit-message {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            text-align: center; opacity: 0; visibility: hidden; 
-            transition: all 1s ease 0.6s; z-index: 10; width: 90%;
+            text-align: center; opacity: 0; visibility: hidden; transition: 1.2s ease 0.5s; z-index: 10;
         }
-        .limit-message h2 { 
-            font-size: 3.5rem; font-weight: 900; color: var(--text); 
-            letter-spacing: 8px; margin: 0; text-shadow: 0 0 15px rgba(255,255,255,0.3);
-        }
-        .limit-message p { color: var(--subtext); font-size: 1rem; margin-top: 20px; letter-spacing: 1px; }
+        .limit-message h2 { font-size: 3.5rem; font-weight: 900; letter-spacing: 12px; margin: 0; }
+        .limit-message p { color: var(--subtext); font-size: 1.1rem; margin-top: 20px; }
 
         #final-toggle:checked ~ .limit-message { opacity: 1; visibility: visible; }
 
-        /* FINALDA FOOTERNI FIX QILISH */
-        #final-toggle:checked ~ .footer {
-            position: fixed; bottom: 40px; left: 0; width: 100%; border: none; z-index: 20;
-        }
-        #final-toggle:checked ~ .footer .social-link { color: var(--accent); font-size: 1rem; text-shadow: 0 0 8px var(--accent); }
-
         /* ASOSIY DIZAYN */
-        .main-container { max-width: 1100px; width: 90%; margin: 0 auto; transition: 0.5s; }
-        .image-section { text-align: center; margin-bottom: 30px; }
-        .profile-img { width: 100%; max-width: 350px; border-radius: 40px; border: 3px solid var(--accent); box-shadow: 0 0 30px rgba(127, 255, 212, 0.1); }
-        .main-title { font-size: 3.2rem; margin: 0; font-weight: 900; letter-spacing: -1px; }
-        .sub-title { color: var(--accent); font-size: 0.9rem; margin: 10px 0 30px 0; text-transform: uppercase; letter-spacing: 2px; }
+        .main-container { max-width: 1000px; width: 90%; margin: 0 auto; transition: 0.8s; }
+        .image-section { text-align: center; margin-bottom: 20px; }
+        .profile-img { width: 100%; max-width: 320px; border-radius: 50px; border: 2px solid var(--accent); }
+        
+        .main-title { font-size: 3.5rem; margin: 0; font-weight: 900; text-align: center; }
+        .sub-title { color: var(--accent); font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; text-align: center; margin-bottom: 40px; }
 
-        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 40px; }
-
-        .btn {
-            background-color: var(--card); border: 1px solid rgba(127, 255, 212, 0.1);
-            border-radius: 20px; padding: 25px 10px; text-align: center; cursor: pointer;
-            transition: 0.3s; display: flex; flex-direction: column; align-items: center; position: relative;
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
-        .btn:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
 
-        .label { font-size: 0.6rem; color: var(--subtext); text-transform: uppercase; margin-bottom: 5px; opacity: 0.7; }
-        .highlight-text { font-size: 1rem; font-weight: bold; color: var(--accent); }
+        /* TUGMALARNI O'CHIRISH EFFEKTI */
+        .btn {
+            background-color: var(--card);
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 25px 10px;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
 
-        /* THE END TUGMASI - O'RTADA */
-        .end-wrapper { grid-column: span 3; display: flex; justify-content: center; margin-top: 10px; }
-        .end-btn { width: 40%; border: 1px solid rgba(255,255,255,0.1); }
+        /* Tugma ichidagi ma'lumotlar boshida ko'rinmaydi */
+        .label, .val { opacity: 0; transform: translateY(10px); transition: 0.3s; }
+        
+        /* Bosilganda yoki ustiga borganda: ma'lumot ko'rinadi va tugma yo'qoladi */
+        .btn:hover {
+            background: transparent;
+            border-color: transparent;
+            transform: scale(1.1);
+        }
+        .btn:hover .label, .btn:hover .val {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Ma'lumot ko'ringach, tugma fondan ajralib turmaydi */
 
-        .footer { text-align: center; padding: 30px 0; border-top: 1px solid #1a1a1e; margin-top: 20px; transition: 0.5s; }
+        .label { font-size: 0.6rem; color: var(--subtext); text-transform: uppercase; margin-bottom: 5px; }
+        .val { font-size: 1.1rem; font-weight: bold; color: var(--accent); }
+
+        /* THE END TUGMASI - PASTI O'RTADA */
+        .end-wrapper { grid-column: 2 / 3; margin-top: 20px; }
+        .end-btn { border: 1px dashed var(--accent); opacity: 0.8; }
+        .end-btn:hover { opacity: 1; transform: scale(1.05); background: var(--card) !important; border-color: white !important; }
+
+        .footer { text-align: center; padding: 40px 0; border-top: 1px solid #111; margin-top: 50px; }
         .social-link { color: var(--subtext); text-decoration: none; font-size: 0.8rem; margin: 0 15px; font-weight: bold; transition: 0.3s; }
         .social-link:hover { color: var(--accent); }
 
-        @media screen and (max-width: 1024px) {
+        @media screen and (max-width: 900px) {
             .menu-grid { grid-template-columns: repeat(2, 1fr); }
             .end-wrapper { grid-column: span 2; }
-            .end-btn { width: 100%; }
             .main-title { font-size: 2.5rem; }
-            .limit-message h2 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -102,7 +114,6 @@
 
     <input type="checkbox" id="flash-toggle">
     <input type="checkbox" id="final-toggle">
-
     <label for="flash-toggle" class="flash-overlay"></label>
 
     <div class="limit-message">
@@ -115,41 +126,37 @@
             <img src="IMG_20260329_013912_893.jpg" class="profile-img" alt="Zham">
         </div>
 
-        <div class="right-section">
-            <h1 class="main-title">Jamshid</h1>
-            <p class="sub-title">Exploring the digital universe</p>
+        <h1 class="main-title">Jamshid</h1>
+        <p class="sub-title">Tap to reveal my world</p>
+        
+        <div class="menu-grid">
+            <div class="btn"><span class="label">First Name</span><span class="val">Ablakimov</span></div>
+            <div class="btn"><span class="label">Last Name</span><span class="val">Jamshid</span></div>
+            <div class="btn"><span class="label">Age</span><span class="val">17</span></div>
             
-            <div class="menu-grid">
-                <div class="btn"><span class="label">First Name</span><span class="highlight-text">Ablakimov</span></div>
-                <div class="btn"><span class="label">Last Name</span><span class="highlight-text">Jamshid</span></div>
-                <div class="btn"><span class="label">Age</span><span class="highlight-text">17</span></div>
-                
-                <div class="btn"><span class="label">Profession</span><span class="highlight-text">UI/UX Designer</span></div>
-                <div class="btn"><span class="label">Hobby</span><span class="highlight-text">Video Editing</span></div>
+            <div class="btn"><span class="label">Profession</span><span class="val">UI/UX Designer</span></div>
+            <div class="btn"><span class="label">Hobby</span><span class="val">Video Editing</span></div>
+            
+            <label for="flash-toggle" class="btn">
+                <span class="label">Personal</span><span class="val">Flashbang 😘</span>
+            </label>
 
-                <label for="flash-toggle" class="btn">
-                    <span class="label">Personal</span>
-                    <span class="highlight-text">flashbang</span>
+            <div class="btn"><span class="label">Birthday</span><span class="val">20.07.2008</span></div>
+            <div class="btn"><span class="label">Idol</span><span class="val">C. Ronaldo</span></div>
+            <div class="btn"><span class="label">Director</span><span class="val">C. Nolan</span></div>
+
+            <div class="btn"><span class="label">Actor</span><span class="val">Jim Carrey</span></div>
+            <div class="btn"><span class="label">Artist</span><span class="val">d4vd</span></div>
+            <div class="btn"><span class="label">Food</span><span class="val">Somsa</span></div>
+
+            <div class="btn"><span class="label">Sport</span><span class="val">Football</span></div>
+            <div class="btn"><span class="label">Favorite No</span><span class="val">27</span></div>
+            
+
+            <div class="end-wrapper">
+                <label for="final-toggle" class="btn end-btn">
+                    <span class="label">System</span><span class="val">THE END</span>
                 </label>
-
-                <div class="btn"><span class="label">Birthday</span><span class="highlight-text">20.07.2008</span></div>
-                <div class="btn"><span class="label">Idol</span><span class="highlight-text">C. Ronaldo</span></div>
-                <div class="btn"><span class="label">Director</span><span class="highlight-text">C. Nolan</span></div>
-
-                <div class="btn"><span class="label">Actor</span><span class="highlight-text">Jim Carrey</span></div>
-                <div class="btn"><span class="label">Artist</span><span class="highlight-text">d4vd</span></div>
-                <div class="btn"><span class="label">Food</span><span class="highlight-text">Somsa</span></div>
-
-                <div class="btn"><span class="label">Sport</span><span class="highlight-text">Football</span></div>
-                <div class="btn"><span class="label">Favorite No</span><span class="highlight-text">27</span></div>
-                <div class="btn"><span class="label">Theme</span><span class="highlight-text">Aqua Dark</span></div>
-
-                <div class="end-wrapper">
-                    <label for="final-toggle" class="btn end-btn">
-                        <span class="label">System</span>
-                        <span class="highlight-text">THE END</span>
-                    </label>
-                </div>
             </div>
         </div>
     </div>
@@ -157,7 +164,7 @@
     <div class="footer">
         <a href="https://t.me/jamwid_unvrsl" class="social-link" target="_blank">TELEGRAM</a>
         <a href="https://instagram.com/zham.99" class="social-link" target="_blank">INSTAGRAM </a>
-        <p style="color: #222; font-size: 0.6rem; margin-top: 15px;">© 2026 ZHAM UNVRSL</p>
+        <p style="color: #222; font-size: 0.6rem; margin-top: 15px;">© 2026 JAMSHID.UNVRSL BUILD WITH PASSION</p>
     </div>
 
 </body>
