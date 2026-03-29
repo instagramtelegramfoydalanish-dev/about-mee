@@ -23,10 +23,9 @@
         }
 
         body { display: block; min-height: 100vh; padding: 50px 0; }
-
         .hide-input { display: none; }
 
-        /* 1. VOID REACHED (FINAL) */
+        /* VOID REACHED (FINAL) */
         #final-toggle:checked ~ .main-container {
             opacity: 0; visibility: hidden; transform: scale(0.95); transition: 1s ease;
         }
@@ -36,12 +35,10 @@
         }
         .limit-message h2 { font-size: 3.5rem; font-weight: 900; letter-spacing: 12px; margin: 0; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
         .limit-message p { color: var(--subtext); font-size: 1.1rem; margin-top: 20px; }
-
         #final-toggle:checked ~ .limit-message { opacity: 1; visibility: visible; }
 
         /* ASOSIY DIZAYN */
         .main-container { max-width: 1000px; width: 90%; margin: 0 auto; transition: 0.8s; }
-        
         .image-section { text-align: center; margin-bottom: 20px; }
         .profile-img { 
             width: 100%; max-width: 320px; border-radius: 50px; 
@@ -49,62 +46,28 @@
             box-shadow: var(--neon-shadow);
             transition: all 0.5s ease;
         }
-        .profile-img:hover {
-            filter: brightness(0.3);
-            box-shadow: 0 0 0px transparent;
-            border-color: #222;
-        }
+        .profile-img:hover { filter: brightness(0.3); box-shadow: 0 0 0px transparent; border-color: #222; }
         
         .main-title { font-size: 3.5rem; margin: 0; font-weight: 900; text-align: center; }
         .sub-title { color: var(--accent); font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; text-align: center; margin-bottom: 40px; }
 
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
+        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
 
         .btn {
-            background-color: var(--card);
-            border: 1px solid #222;
-            border-radius: 20px;
-            padding: 25px 10px;
-            text-align: center;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            transition: all 0.4s ease;
-            box-shadow: var(--neon-shadow);
-            position: relative;
+            background-color: var(--card); border: 1px solid #222; border-radius: 20px; padding: 25px 10px;
+            text-align: center; cursor: pointer; display: flex; flex-direction: column; justify-content: center;
+            transition: all 0.4s ease; box-shadow: var(--neon-shadow); position: relative;
         }
-
-        .btn:hover {
-            box-shadow: 0 0 5px rgba(127, 255, 212, 0.1);
-            border-color: #444;
-            transform: translateY(-2px);
-        }
+        .btn:hover { box-shadow: 0 0 5px rgba(127, 255, 212, 0.1); border-color: #444; transform: translateY(-2px); }
 
         .label, .val { opacity: 0; transform: translateY(10px); transition: 0.3s; }
 
-        /* BOSILGANDA O'CHIB KETISH */
-        .hide-input:checked + .btn {
-            opacity: 0;
-            transform: scale(0.8);
-            pointer-events: none;
-            box-shadow: none;
-        }
-        
-        .hide-input:checked + .btn .label, 
-        .hide-input:checked + .btn .val {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .hide-input:checked + .btn { opacity: 0; transform: scale(0.8); pointer-events: none; box-shadow: none; }
+        .hide-input:checked + .btn .label, .hide-input:checked + .btn .val { opacity: 1; transform: translateY(0); }
 
         .label { font-size: 0.6rem; color: var(--subtext); text-transform: uppercase; margin-bottom: 5px; }
         .val { font-size: 1.1rem; font-weight: bold; color: var(--accent); }
 
-        /* THE END TUGMASI */
         .end-wrapper { grid-column: 2 / 3; margin-top: 20px; }
         .end-btn { border: 1px dashed var(--accent); box-shadow: 0 0 10px rgba(127, 255, 212, 0.1); }
 
