@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZHAM | Neon Void Portfolio</title>
+    <title>ZHAM | Neon Void</title>
     <style>
         :root {
             --bg: #0a0a0e;
@@ -24,17 +24,9 @@
 
         body { display: block; min-height: 100vh; padding: 50px 0; }
 
-        /* YASHIRIN CHECKBOX LAR */
         .hide-input { display: none; }
 
-        /* 1. FLASHBANG */
-        #flash-toggle:checked ~ .flash-overlay { opacity: 1; visibility: visible; }
-        .flash-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white;
-            z-index: 9999; opacity: 0; visibility: hidden; transition: 0.1s; cursor: pointer;
-        }
-
-        /* 2. VOID REACHED (FINAL) */
+        /* 1. VOID REACHED (FINAL) */
         #final-toggle:checked ~ .main-container {
             opacity: 0; visibility: hidden; transform: scale(0.95); transition: 1s ease;
         }
@@ -50,7 +42,6 @@
         /* ASOSIY DIZAYN */
         .main-container { max-width: 1000px; width: 90%; margin: 0 auto; transition: 0.8s; }
         
-        /* RASM VA NEON SO'NISHI */
         .image-section { text-align: center; margin-bottom: 20px; }
         .profile-img { 
             width: 100%; max-width: 320px; border-radius: 50px; 
@@ -73,7 +64,6 @@
             gap: 15px;
         }
 
-        /* TUGMALAR VA NEON LOGIKASI */
         .btn {
             background-color: var(--card);
             border: 1px solid #222;
@@ -89,7 +79,6 @@
             position: relative;
         }
 
-        /* Yaqinlashganda neon kamayishi */
         .btn:hover {
             box-shadow: 0 0 5px rgba(127, 255, 212, 0.1);
             border-color: #444;
@@ -98,7 +87,7 @@
 
         .label, .val { opacity: 0; transform: translateY(10px); transition: 0.3s; }
 
-        /* BOSILGANDA O'CHIB KETISH (ONE-TIME VIEW) */
+        /* BOSILGANDA O'CHIB KETISH */
         .hide-input:checked + .btn {
             opacity: 0;
             transform: scale(0.8);
@@ -126,14 +115,13 @@
         @media screen and (max-width: 900px) {
             .menu-grid { grid-template-columns: repeat(2, 1fr); }
             .end-wrapper { grid-column: span 2; }
+            .main-title { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <input type="checkbox" id="flash-toggle" class="hide-input">
     <input type="checkbox" id="final-toggle" class="hide-input">
-    <label for="flash-toggle" class="flash-overlay"></label>
 
     <div class="limit-message">
         <h2>VOID REACHED</h2>
@@ -155,22 +143,19 @@
             
             <input type="checkbox" id="m4" class="hide-input"><label for="m4" class="btn"><span class="label">Profession</span><span class="val">UI/UX Designer</span></label>
             <input type="checkbox" id="m5" class="hide-input"><label for="m5" class="btn"><span class="label">Hobby</span><span class="val">Video Editing</span></label>
-            
-            <label for="flash-toggle" class="btn">
-                <span class="label">Personal</span><span class="val">Flashbang 😘</span>
-            </label>
-
             <input type="checkbox" id="m6" class="hide-input"><label for="m6" class="btn"><span class="label">Birthday</span><span class="val">20.07.2008</span></label>
+
             <input type="checkbox" id="m7" class="hide-input"><label for="m7" class="btn"><span class="label">Idol</span><span class="val">C. Ronaldo</span></label>
             <input type="checkbox" id="m8" class="hide-input"><label for="m8" class="btn"><span class="label">Director</span><span class="val">C. Nolan</span></label>
-
             <input type="checkbox" id="m9" class="hide-input"><label for="m9" class="btn"><span class="label">Actor</span><span class="val">Jim Carrey</span></label>
+
             <input type="checkbox" id="m10" class="hide-input"><label for="m10" class="btn"><span class="label">Artist</span><span class="val">d4vd</span></label>
             <input type="checkbox" id="m11" class="hide-input"><label for="m11" class="btn"><span class="label">Food</span><span class="val">Somsa</span></label>
-
             <input type="checkbox" id="m12" class="hide-input"><label for="m12" class="btn"><span class="label">Sport</span><span class="val">Football</span></label>
+
             <input type="checkbox" id="m13" class="hide-input"><label for="m13" class="btn"><span class="label">Favorite No</span><span class="val">27</span></label>
             <input type="checkbox" id="m14" class="hide-input"><label for="m14" class="btn"><span class="label">Status</span><span class="val">Active</span></label>
+            <input type="checkbox" id="m15" class="hide-input"><label for="m15" class="btn"><span class="label">Vibe</span><span class="val">Minimal</span></label>
 
             <div class="end-wrapper">
                 <label for="final-toggle" class="btn end-btn">
