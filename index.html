@@ -25,20 +25,29 @@
         body { display: block; min-height: 100vh; padding: 50px 0; }
         .hide-input { display: none; }
 
-        /* VOID REACHED (FINAL SCREEN) */
+        /* VOID REACHED LOGIKASI (FIXED) */
+        /* Checkbox tepada bo'lishi shart, shunda pastdagi hamma narsani boshqara oladi */
         #final-toggle:checked ~ .main-container {
-            opacity: 0; visibility: hidden; transform: scale(0.95); transition: 1s ease;
+            opacity: 0; 
+            visibility: hidden; 
+            transform: scale(0.9); 
+            transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        
+        #final-toggle:checked ~ .limit-message { 
+            opacity: 1; 
+            visibility: visible; 
+        }
+
         .limit-message {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             text-align: center; opacity: 0; visibility: hidden; transition: 1.2s ease 0.5s; z-index: 10;
         }
-        .limit-message h2 { font-size: 3.5rem; font-weight: 900; letter-spacing: 12px; margin: 0; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .limit-message h2 { font-size: 3.5rem; font-weight: 900; letter-spacing: 12px; margin: 0; text-shadow: 0 0 20px rgba(127, 255, 212, 0.4); }
         .limit-message p { color: var(--subtext); font-size: 1.1rem; margin-top: 20px; }
-        #final-toggle:checked ~ .limit-message { opacity: 1; visibility: visible; }
 
         /* ASOSIY KONTEYNER */
-        .main-container { max-width: 1000px; width: 90%; margin: 0 auto; transition: 0.8s; }
+        .main-container { max-width: 1000px; width: 90%; margin: 0 auto; transition: 0.6s; }
         .image-section { text-align: center; margin-bottom: 20px; }
         .profile-img { 
             width: 100%; max-width: 320px; border-radius: 50px; 
@@ -57,19 +66,17 @@
         .btn {
             background-color: var(--card); border: 1px solid #222; border-radius: 20px; padding: 25px 10px;
             text-align: center; cursor: pointer; display: flex; flex-direction: column; justify-content: center;
-            transition: all 0.4s ease; box-shadow: var(--neon-shadow); position: relative;
+            transition: all 0.4s ease; box-shadow: var(--neon-shadow); position: relative; min-height: 80px;
         }
         .btn:hover { box-shadow: 0 0 5px rgba(127, 255, 212, 0.1); border-color: #444; }
 
         .label, .val { opacity: 0; transform: translateY(10px); transition: 0.3s; }
 
-        /* ZANJIR LOGIKASI: Birini bossa, oldingisi yo'qoladi */
-        /* Radio button ishlatamiz, shunda faqat bittasi aktiv bo'ladi */
+        /* ZANJIR LOGIKASI (RADIO) */
         .hide-input:checked + .btn {
             background: transparent;
             border-color: transparent;
             box-shadow: none;
-            cursor: default;
         }
         .hide-input:checked + .btn .label, 
         .hide-input:checked + .btn .val {
@@ -78,20 +85,17 @@
             color: var(--accent);
         }
 
-        /* THE END - Qolganlari bilan bir xil ko'rinadi */
-        .end-wrapper { grid-column: 2 / 3; margin-top: 20px; }
-        .end-btn { border: 1px solid #222; } /* dashed olib tashlandi */
-
         .label { font-size: 0.6rem; color: var(--subtext); text-transform: uppercase; margin-bottom: 5px; }
         .val { font-size: 1.1rem; font-weight: bold; }
 
-        .footer { text-align: center; padding: 40px 0; border-top: 1px solid #111; margin-top: 50px; }
+        .footer { text-align: center; padding: 40px 0; border-top: 1px solid #111; margin-top: 50px; transition: 0.5s; }
+        #final-toggle:checked ~ .footer { opacity: 0; }
+
         .social-link { color: var(--subtext); text-decoration: none; font-size: 0.8rem; margin: 0 15px; font-weight: bold; }
         .social-link:hover { color: var(--accent); }
 
         @media screen and (max-width: 900px) {
             .menu-grid { grid-template-columns: repeat(2, 1fr); }
-            .end-wrapper { grid-column: span 2; }
             .main-title { font-size: 2.5rem; }
         }
     </style>
@@ -128,14 +132,14 @@
 
             <input type="radio" name="info" id="m10" class="hide-input"><label for="m10" class="btn"><span class="label">Artist</span><span class="val">d4vd</span></label>
             <input type="radio" name="info" id="m11" class="hide-input"><label for="m11" class="btn"><span class="label">Food</span><span class="val">Somsa</span></label>
-            <input type="radio" name="info" id="m12" class="hide-input"><label for="m12" class="btn"><span class="label">Sport</span><span class="val">Football</span></label>
+            <input type="checkbox" id="m12" class="hide-input"><label for="m12" class="btn"><span class="label">Sport</span><span class="val">Football</span></label>
 
             <input type="radio" name="info" id="m13" class="hide-input"><label for="m13" class="btn"><span class="label">Favorite No</span><span class="val">27</span></label>
-                        <div class="end-wrapper">
-                <label for="final-toggle" class="btn end-btn">
-                    <span class="label">System</span><span class="val">THE END</span>
-                </label>
-            </div>
+            <input type="radio" name="info" id="m14" class="hide-input"><label for="m14" class="btn"><span class="label">Favorite team</span><span class="val">Real Madrid</span></label>
+            
+            <label for="final-toggle" class="btn">
+                <span class="label">Soul</span><span class="val">Minimalist</span>
+            </label>
         </div>
     </div>
 
