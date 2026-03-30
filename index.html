@@ -30,64 +30,82 @@
 
         .main-container { max-width: 400px; width: 90%; text-align: center; z-index: 10; margin-top: -30px; }
 
+        /* PROFIL VA NEON WAVE */
+        .profile-container {
+            position: relative;
+            width: 180px; height: 180px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .neon-wave {
+            position: absolute;
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            border: 2px solid var(--neon);
+            box-shadow: 0 0 20px var(--neon);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.1s linear, opacity 0.3s;
+        }
+
         .profile-wrapper {
             width: 150px; height: 150px;
-            margin: 0 auto 20px;
             border-radius: 50%;
             border: 2px solid var(--neon);
             padding: 5px;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+            background: var(--bg);
+            z-index: 2;
             cursor: pointer;
             transition: 0.3s ease;
             overflow: hidden;
-            position: relative;
         }
         .profile-wrapper img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-        .profile-wrapper:active { transform: scale(0.92); box-shadow: 0 0 60px var(--neon); }
+        .profile-wrapper:active { transform: scale(0.92); }
 
         .main-title { 
             font-size: 1.6rem; font-weight: 800; margin-bottom: 30px; 
             letter-spacing: 2px; text-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
         }
 
+        /* MENYULAR */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
         .btn {
             background: var(--glass); border: 1px solid rgba(255,255,255,0.05); 
-            border-radius: 20px; padding: 20px 10px; cursor: pointer; transition: 0.3s;
+            border-radius: 20px; padding: 22px 10px; cursor: pointer; transition: 0.3s;
             backdrop-filter: blur(10px);
         }
         .full-btn { grid-column: span 2; margin-top: 5px; border: 1px solid rgba(0, 243, 255, 0.1); }
-        
-        .btn:active { transform: scale(0.96); filter: brightness(0.8); border-color: var(--neon); }
+        .btn:active { transform: scale(0.96); border-color: var(--neon); }
         
         .label { font-size: 0.55rem; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px; letter-spacing: 1px; }
         .val { font-size: 0.9rem; font-weight: bold; color: var(--neon); letter-spacing: 1px; }
 
-        .social-links { margin-top: 30px; margin-bottom: 15px; }
-        .social-links a { color: #fff; text-decoration: none; margin: 0 12px; font-size: 0.7rem; font-weight: 900; opacity: 0.4; transition: 0.3s; }
-        .social-links a:hover { opacity: 1; color: var(--neon); }
-        .copyright { font-size: 0.55rem; color: #333; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; }
-
-        /* MODAL */
+        /* MODAL VIZUALI */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); backdrop-filter: blur(20px); display: none; align-items: center; justify-content: center; z-index: 200; }
         .modal-content { background: #0a0a0a; width: 88%; max-width: 340px; padding: 30px; border-radius: 25px; border: 1px solid var(--neon); text-align: center; }
-        
-        input, textarea { 
-            width: 100%; background: #111; border: 1px solid #222; color: #fff; 
-            border-radius: 12px; padding: 12px; margin-top: 10px; outline: none; font-family: inherit;
-        }
+        input, textarea { width: 100%; background: #111; border: 1px solid #222; color: #fff; border-radius: 12px; padding: 12px; margin-top: 10px; outline: none; font-family: inherit; }
         .timer-display { font-family: monospace; color: var(--neon); font-size: 1.2rem; margin: 10px 0; letter-spacing: 2px; }
         .modal-btn { margin-top: 20px; background: var(--neon); border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: bold; cursor: pointer; color: #000; }
-        .desc { font-size: 0.75rem; color: #555; margin-bottom: 10px; line-height: 1.4; }
+
+        .social-links { margin-top: 30px; margin-bottom: 15px; }
+        .social-links a { color: #fff; text-decoration: none; margin: 0 12px; font-size: 0.7rem; font-weight: 900; opacity: 0.4; }
+        .copyright { font-size: 0.55rem; color: #333; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <canvas id="particle-canvas"></canvas>
+    <audio id="bg-music" crossorigin="anonymous" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
     <div class="main-container">
-        <div class="profile-wrapper" onclick="burstEffect(event)">
-            <img src="IMG_20260329_013912_893.jpg" alt="Jamshid">
+        <div class="profile-container">
+            <div id="neon-wave" class="neon-wave"></div>
+            <div class="profile-wrapper" onclick="startExperience(event)">
+                <img src="IMG_20260329_013912_893.jpg" alt="Jamshid">
+            </div>
         </div>
         
         <h1 class="main-title">JAMSHID ABLAKIMOV</h1>
@@ -114,8 +132,8 @@
     <div id="modal-wall" class="modal" onclick="closeModal('modal-wall')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h2 style="color:var(--neon); font-size: 1.1rem;">WALL</h2>
-            <p class="desc">Bu yerga yozilgan xabarlar darhol menga yetib keladi.(Albatta Anonim foydalanuvchi tomonidan</p>
-            <textarea id="wall-msg" placeholder="Xabaringizni qoldiring..."></textarea>
+            <input type="text" id="wall-user" placeholder="Telegram Username">
+            <textarea id="wall-msg" placeholder="Xabaringiz..."></textarea>
             <button class="modal-btn" onclick="sendToBot('wall')">YUBORISH</button>
         </div>
     </div>
@@ -123,32 +141,134 @@
     <div id="modal-kapsula" class="modal" onclick="closeModal('modal-kapsula')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h2 style="color:var(--neon); font-size: 1.1rem;">TIME CAPSULE</h2>
-            <p class="desc">Xabarlar to'planadi va har 2 kunda bir marta ochiladi.</p>
             <div class="timer-display" id="kapsula-timer">00:00:00:00</div>
+            <input type="text" id="kapsula-user" placeholder="Telegram Username">
             <textarea id="kapsula-msg" placeholder="Kelajak uchun xabar..."></textarea>
-            <button class="modal-btn" onclick="sendToBot('kapsula')">KAPSULAGA SOLISH</button>
+            <button class="modal-btn" onclick="saveKapsula()">KAPSULAGA SOLISH</button>
         </div>
     </div>
 
     <div id="modal-reminder" class="modal" onclick="closeModal('modal-reminder')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h2 style="color:var(--neon); font-size: 1.1rem;">ESLATMA</h2>
-            <p class="desc">Sizga kerakli vaqtda bot xabar yuboradi. ID kiritishni unutmang! Id ni @userinfobot orqali bilib olishingiz mumkin!</p>
-            <input type="text" id="rem-id" placeholder="Telegram ID (masalan: 6325191171)">
+            <input type="text" id="rem-id" placeholder="Telegram ID">
             <input type="datetime-local" id="rem-time">
             <textarea id="rem-msg" placeholder="Nima haqida eslataylik?"></textarea>
-            <button class="modal-btn" onclick="sendToBot('reminder')">ESLATMANI YOQISH</button>
+            <button class="modal-btn" onclick="sendToBot('reminder')">YOQISH</button>
         </div>
     </div>
 
     <script>
-        // --- ANIMATSIYA ---
+        const botToken = "6676999428:AAG4dXN-aBc8V2h53h9Aq63LT4B797FhEdM";
+        const myChatId = "6325191171";
+        
+        let audioCtx, analyser, dataArray, source;
+        let isPlaying = false;
+
+        // MUSIQA VA WAVE FUNKSIYASI
+        function startExperience(e) {
+            burstEffect(e);
+            const audio = document.getElementById('bg-music');
+            const wave = document.getElementById('neon-wave');
+
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioCtx.createAnalyser();
+                source = audioCtx.createMediaElementSource(audio);
+                source.connect(analyser);
+                analyser.connect(audioCtx.destination);
+                analyser.fftSize = 64;
+                dataArray = new Uint8Array(analyser.frequencyBinCount);
+            }
+
+            if (audio.paused) {
+                audio.play();
+                wave.style.opacity = "1";
+                isPlaying = true;
+                animateWave();
+            } else {
+                audio.pause();
+                wave.style.opacity = "0";
+                isPlaying = false;
+            }
+        }
+
+        function animateWave() {
+            if (!isPlaying) return;
+            analyser.getByteFrequencyData(dataArray);
+            
+            // O'rtacha chastotani hisoblash (bass qismini ko'proq olish)
+            let sum = 0;
+            for(let i=0; i<10; i++) sum += dataArray[i];
+            let average = sum / 10;
+
+            const scale = 1 + (average / 150); // Kattalashish darajasi
+            const blur = average / 5; // Neon nuri darajasi
+            
+            const wave = document.getElementById('neon-wave');
+            wave.style.transform = `scale(${scale})`;
+            wave.style.boxShadow = `0 0 ${20 + blur}px var(--neon)`;
+            
+            requestAnimationFrame(animateWave);
+        }
+
+        // --- QOLGAN SERVISLAR (Wall, Kapsula, Reminder) ---
+        function saveKapsula() {
+            const user = document.getElementById('kapsula-user').value;
+            const msg = document.getElementById('kapsula-msg').value;
+            if(!user || !msg) return alert("To'ldiring!");
+            localStorage.setItem('kapsula_data', JSON.stringify({user, msg, date: new Date().toLocaleString()}));
+            alert("Kapsulaga solindi!"); closeModal('modal-kapsula');
+        }
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const cycle = 2 * 24 * 60 * 60 * 1000;
+            const remaining = cycle - (now % cycle);
+            
+            if (remaining <= 1000) {
+                const saved = localStorage.getItem('kapsula_data');
+                if (saved) {
+                    const p = JSON.parse(saved);
+                    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ chat_id: myChatId, text: `⌛ **KAPSULA**\n👤: ${p.user}\n💬: ${p.msg}`})
+                    });
+                    localStorage.removeItem('kapsula_data');
+                }
+            }
+            const d = Math.floor(remaining / 86400000);
+            const h = Math.floor((remaining % 86400000) / 3600000);
+            const m = Math.floor((remaining % 3600000) / 60000);
+            const s = Math.floor((remaining % 60000) / 1000);
+            document.getElementById('kapsula-timer').innerText = `${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+        setInterval(updateTimer, 1000);
+
+        async function sendToBot(type) {
+            let text = ""; let modalId = "";
+            if(type === 'wall') {
+                text = `🚀 **WALL**\n👤: ${document.getElementById('wall-user').value}\n💬: ${document.getElementById('wall-msg').value}`;
+                modalId = 'modal-wall';
+            } else if(type === 'reminder') {
+                text = `🔔 **ESLATMA**\n🆔: ${document.getElementById('rem-id').value}\n⏰: ${document.getElementById('rem-time').value}\n📝: ${document.getElementById('rem-msg').value}`;
+                modalId = 'modal-reminder';
+            }
+            await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ chat_id: myChatId, text: text })
+            });
+            alert("Yuborildi!"); closeModal(modalId);
+        }
+
+        // --- ZARRACHALAR ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
-
         class Particle {
             constructor(x, y, isBurst = false) {
                 this.isBurst = isBurst;
@@ -156,14 +276,11 @@
                 this.y = y || Math.random() * canvas.height;
                 this.vx = isBurst ? (Math.random() - 0.5) * 12 : (Math.random() - 0.5) * 0.5;
                 this.vy = isBurst ? (Math.random() - 0.5) * 12 : -Math.random() * 1.5;
-                this.alpha = 1;
-                this.size = isBurst ? Math.random() * 3 + 1 : Math.random() * 1.5;
-                this.life = isBurst ? 0.02 : 0.005;
+                this.alpha = 1; this.life = isBurst ? 0.02 : 0.005;
             }
             update() { this.x += this.vx; this.y += this.vy; this.alpha -= this.life; }
-            draw() { ctx.globalAlpha = this.alpha; ctx.fillStyle = '#00f3ff'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+            draw() { ctx.globalAlpha = this.alpha; ctx.fillStyle = '#00f3ff'; ctx.beginPath(); ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2); ctx.fill(); }
         }
-
         function animate() {
             ctx.clearRect(0,0,canvas.width, canvas.height);
             particles = particles.filter(p => p.alpha > 0);
@@ -172,85 +289,12 @@
             requestAnimationFrame(animate);
         }
         animate();
-
         function burstEffect(e) {
             const rect = document.querySelector('.profile-wrapper').getBoundingClientRect();
-            const x = rect.left + rect.width / 2;
-            const y = rect.top + rect.height / 2;
-            for(let i=0; i<30; i++) particles.push(new Particle(x, y, true));
+            for(let i=0; i<30; i++) particles.push(new Particle(rect.left + 75, rect.top + 75, true));
         }
-
-        // --- FUNKSIYALAR ---
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-        // Kapsula Taymeri (2 kunlik sikl)
-        function updateTimer() {
-            const now = new Date().getTime();
-            const cycle = 2 * 24 * 60 * 60 * 1000; // 2 kun millisekundda
-            const remaining = cycle - (now % cycle);
-            
-            const d = Math.floor(remaining / (1000 * 60 * 60 * 24));
-            const h = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((remaining % (1000 * 60)) / 1000);
-            
-            document.getElementById('kapsula-timer').innerText = 
-                `${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-        }
-        setInterval(updateTimer, 1000);
-
-        async function sendToBot(type) {
-            const botToken = "6676999428:AAG4dXN-aBc8V2h53h9Aq63LT4B797FhEdM";
-            const myChatId = "6325191171";
-            let text = "";
-            let modalId = "";
-
-            if(type === 'wall') {
-                const msg = document.getElementById('wall-msg').value;
-                if(!msg) return;
-                text = `🚀 **WALL MESSAGE**\n\n${msg}`;
-                modalId = 'modal-wall';
-            } 
-            else if(type === 'kapsula') {
-                const msg = document.getElementById('kapsula-msg').value;
-                if(!msg) return;
-                text = `⏳ **KAPSULA (2 kunlik)**\n\n${msg}\n\nOchilishi: ${document.getElementById('kapsula-timer').innerText}`;
-                modalId = 'modal-kapsula';
-            }
-            else if(type === 'reminder') {
-                const id = document.getElementById('rem-id').value;
-                const time = document.getElementById('rem-time').value;
-                const msg = document.getElementById('rem-msg').value;
-                if(!id || !time || !msg) { alert("Barcha maydonlarni to'ldiring!"); return; }
-                text = `🔔 **YANGI ESLATMA**\n\nKimga: ${id}\nVaqt: ${time}\nXabar: ${msg}`;
-                modalId = 'modal-reminder';
-            }
-
-            try {
-                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ chat_id: myChatId, text: text, parse_mode: "Markdown" })
-                });
-
-                if(response.ok) {
-                    alert("Muvaffaqiyatli bajarildi!");
-                    closeModal(modalId);
-                    if(type === 'reminder') {
-                        // Foydalanuvchiga ham tasdiq yuborish (agar botni start qilgan bo'lsa)
-                        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ 
-                                chat_id: document.getElementById('rem-id').value, 
-                                text: `✅ Eslatma saqlandi!\n\n${document.getElementById('rem-time').value} vaqtida sizga xabar yuboramiz.` 
-                            })
-                        });
-                    }
-                }
-            } catch (e) { alert("Xatolik yuz berdi!"); }
-        }
     </script>
 </body>
 </html>
