@@ -3,151 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZHAM | Neon Void</title>
+    <title>ZHAM | Digital Architect</title>
     <style>
         :root {
-            --bg: #0a0a0e;
-            --card: #16161a;
-            --text: #ffffff;
-            --accent: aquamarine;
-            --subtext: #555;
-            --neon-shadow: 0 0 15px rgba(127, 255, 212, 0.3);
+            --neon: #00f3ff;
+            --bg: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
         }
 
-        html, body {
-            background-color: var(--bg);
-            margin: 0; padding: 0;
+        body {
+            background: var(--bg);
+            color: white;
             font-family: 'Segoe UI', sans-serif;
-            color: var(--text);
-            overflow-x: hidden;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
 
-        body { display: block; min-height: 100vh; padding: 50px 0; }
-        .hide-input { display: none; }
-
-        /* VOID REACHED LOGIKASI (FIXED) */
-        /* Checkbox tepada bo'lishi shart, shunda pastdagi hamma narsani boshqara oladi */
-        #final-toggle:checked ~ .main-container {
-            opacity: 0; 
-            visibility: hidden; 
-            transform: scale(0.9); 
-            transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        #final-toggle:checked ~ .limit-message { 
-            opacity: 1; 
-            visibility: visible; 
+        #particle-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
         }
 
-        .limit-message {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            text-align: center; opacity: 0; visibility: hidden; transition: 1.2s ease 0.5s; z-index: 10;
-        }
-        .limit-message h2 { font-size: 3.5rem; font-weight: 900; letter-spacing: 12px; margin: 0; text-shadow: 0 0 20px rgba(127, 255, 212, 0.4); }
-        .limit-message p { color: var(--subtext); font-size: 1.1rem; margin-top: 20px; }
-
-        /* ASOSIY KONTEYNER */
-        .main-container { max-width: 1000px; width: 90%; margin: 0 auto; transition: 0.6s; }
-        .image-section { text-align: center; margin-bottom: 20px; }
-        .profile-img { 
-            width: 100%; max-width: 320px; border-radius: 50px; 
-            border: 2px solid var(--accent); 
-            box-shadow: var(--neon-shadow);
-            transition: all 0.5s ease;
-        }
-        .profile-img:hover { filter: brightness(0.3); box-shadow: 0 0 0px transparent; border-color: #222; }
-        
-        .main-title { font-size: 3.5rem; margin: 0; font-weight: 900; text-align: center; }
-        .sub-title { color: var(--accent); font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; text-align: center; margin-bottom: 40px; }
-
-        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-
-        /* TUGMALAR */
-        .btn {
-            background-color: var(--card); border: 1px solid #222; border-radius: 20px; padding: 25px 10px;
-            text-align: center; cursor: pointer; display: flex; flex-direction: column; justify-content: center;
-            transition: all 0.4s ease; box-shadow: var(--neon-shadow); position: relative; min-height: 80px;
-        }
-        .btn:hover { box-shadow: 0 0 5px rgba(127, 255, 212, 0.1); border-color: #444; }
-
-        .label, .val { opacity: 0; transform: translateY(10px); transition: 0.3s; }
-
-        /* ZANJIR LOGIKASI (RADIO) */
-        .hide-input:checked + .btn {
-            background: transparent;
-            border-color: transparent;
-            box-shadow: none;
-        }
-        .hide-input:checked + .btn .label, 
-        .hide-input:checked + .btn .val {
-            opacity: 1;
-            transform: translateY(0);
-            color: var(--accent);
+        /* ASOSIY KARTA */
+        .card {
+            background: var(--glass);
+            width: 85%;
+            max-width: 340px;
+            padding: 30px;
+            border-radius: 28px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 243, 255, 0.15);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
+            z-index: 10;
         }
 
-        .label { font-size: 0.6rem; color: var(--subtext); text-transform: uppercase; margin-bottom: 5px; }
-        .val { font-size: 1.1rem; font-weight: bold; }
-
-        .footer { text-align: center; padding: 40px 0; border-top: 1px solid #111; margin-top: 50px; transition: 0.5s; }
-        #final-toggle:checked ~ .footer { opacity: 0; }
-
-        .social-link { color: var(--subtext); text-decoration: none; font-size: 0.8rem; margin: 0 15px; font-weight: bold; }
-        .social-link:hover { color: var(--accent); }
-
-        @media screen and (max-width: 900px) {
-            .menu-grid { grid-template-columns: repeat(2, 1fr); }
-            .main-title { font-size: 2.5rem; }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid var(--neon);
+            padding: 5px;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+            object-fit: cover;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
+        h1 { font-size: 22px; margin: 15px 0 5px; letter-spacing: 1px; }
+        .role { color: var(--neon); font-size: 11px; letter-spacing: 3px; margin-bottom: 25px; text-transform: uppercase; font-weight: 300; }
+
+        /* SKILLS (MAHORATLAR) */
+        .skills-container {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .skill-item { margin-bottom: 12px; }
+        .skill-label { font-size: 10px; color: #888; margin-bottom: 4px; display: flex; justify-content: space-between; }
+        .skill-bar-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; }
+        .skill-bar-fill { height: 100%; background: var(--neon); box-shadow: 0 0 10px var(--neon); border-radius: 2px; }
+
+        /* IJTIMOIY TUGMALAR */
+        .social-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .social-link {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .social-link:active { background: var(--neon); color: black; box-shadow: 0 0 20px var(--neon); }
+
+        .passion { font-size: 9px; color: #444; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; }
+
+        /* NAVIGATSIYA */
+        .bottom-nav {
+            position: fixed;
+            bottom: 30px;
+            width: 90%;
+            max-width: 380px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: var(--glass);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            padding: 14px;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-title { display: block; font-weight: bold; font-size: 13px; color: var(--neon); letter-spacing: 1px; }
+        .btn-desc { font-size: 9px; color: #777; margin-top: 3px; }
+
+        .active-glow { box-shadow: 0 0 40px var(--neon) !important; transform: scale(0.96); }
+
     </style>
 </head>
 <body>
 
-    <input type="checkbox" id="final-toggle" class="hide-input">
+    <canvas id="particle-canvas"></canvas>
 
-    <div class="limit-message">
-        <h2>VOID REACHED</h2>
-        <p>I hope you remembered all of this.</p>
-    </div>
+    <div class="card">
+        <img src="IMG_20260329_013912_893.jpg" class="profile-img" id="profile-trigger">
+        <h1>Jamshid Ablakimov</h1>
+        <div class="role">UI/UX & Video Editor</div>
 
-    <div class="main-container">
-        <div class="image-section">
-            <img src="IMG_20260329_013912_893.jpg" class="profile-img" alt="Zham">
+        <div class="skills-container">
+            <div class="skill-item">
+                <div class="skill-label"><span>UI/UX DESIGN</span><span>90%</span></div>
+                <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-label"><span>VIDEO EDITING</span><span>85%</span></div>
+                <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 85%"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-label"><span>DEVELOPMENT</span><span>75%</span></div>
+                <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 75%"></div></div>
+            </div>
         </div>
 
-        <h1 class="main-title">JAMSHID</h1>
-        <p class="sub-title">Step into the sequence</p>
-        
-        <div class="menu-grid">
-            <input type="radio" name="info" id="m1" class="hide-input"><label for="m1" class="btn"><span class="label">First Name</span><span class="val">Ablakimov</span></label>
-            <input type="radio" name="info" id="m2" class="hide-input"><label for="m2" class="btn"><span class="label">Last Name</span><span class="val">Jamshid</span></label>
-            <input type="radio" name="info" id="m3" class="hide-input"><label for="m3" class="btn"><span class="label">Age</span><span class="val">17</span></label>
-            
-            <input type="radio" name="info" id="m4" class="hide-input"><label for="m4" class="btn"><span class="label">Profession</span><span class="val">UI/UX Designer</span></label>
-            <input type="radio" name="info" id="m5" class="hide-input"><label for="m5" class="btn"><span class="label">Hobby</span><span class="val">Video Editing</span></label>
-            <input type="radio" name="info" id="m6" class="hide-input"><label for="m6" class="btn"><span class="label">Birthday</span><span class="val">20.07.2008</span></label>
+        <div class="social-row">
+            <a href="https://t.me/jamwid_unvrsl" class="social-link" onclick="trigger(this)">TELEGRAM</a>
+            <a href="https://instagram.com/zham.99" class="social-link" onclick="trigger(this)">INSTAGRAM</a>
+        </div>
 
-            <input type="radio" name="info" id="m7" class="hide-input"><label for="m7" class="btn"><span class="label">Idol</span><span class="val">C. Ronaldo</span></label>
-            <input type="radio" name="info" id="m8" class="hide-input"><label for="m8" class="btn"><span class="label">Director</span><span class="val">C. Nolan</span></label>
-            <input type="radio" name="info" id="m9" class="hide-input"><label for="m9" class="btn"><span class="label">Actor</span><span class="val">Jim Carrey</span></label>
+        <div class="passion">Build with passion</div>
+    </div>
 
-            <input type="radio" name="info" id="m10" class="hide-input"><label for="m10" class="btn"><span class="label">Artist</span><span class="val">d4vd</span></label>
-            <input type="radio" name="info" id="m11" class="hide-input"><label for="m11" class="btn"><span class="label">Food</span><span class="val">Somsa</span></label>
-            <input type="checkbox" id="m12" class="hide-input"><label for="m12" class="btn"><span class="label">Sport</span><span class="val">Football</span></label>
-
-            <input type="radio" name="info" id="m13" class="hide-input"><label for="m13" class="btn"><span class="label">Favorite No</span><span class="val">27</span></label>
-            <input type="radio" name="info" id="m14" class="hide-input"><label for="m14" class="btn"><span class="label">Favorite team</span><span class="val">Real Madrid</span></label>
-            
-            <label for="final-toggle" class="btn">
-                <span class="label">Soul</span><span class="val">Minimalist</span>
-            </label>
+    <div class="bottom-nav">
+        <div class="nav-btn" onclick="trigger(this, 'KAPSULA')">
+            <span class="btn-title">KAPSULA</span>
+            <span class="btn-desc">Future Message</span>
+        </div>
+        <div class="nav-btn" onclick="trigger(this, 'WALL')">
+            <span class="btn-title">WALL</span>
+            <span class="btn-desc">Anonymous Wall</span>
         </div>
     </div>
 
-    <div class="footer">
-        <a href="https://t.me/jamwidunvrsl" class="social-link" target="_blank">TELEGRAM</a>
-        <a href="https://instagram.com/zham.99" class="social-link" target="_blank">INSTAGRAM</a>
-        <p style="color: #222; font-size: 0.6rem; margin-top: 15px;">© 2026 JAMSHID.UNVRSL BUILD WITH PASSION</p>
-    </div>
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
 
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.7;
+                this.vy = (Math.random() - 0.5) * 0.7;
+                this.alpha = Math.random();
+                this.target = null;
+            }
+            update() {
+                if(this.target) {
+                    this.x += (this.target.x - this.x) * 0.12;
+                    this.y += (this.target.y - this.y) * 0.12;
+                    this.alpha -= 0.02;
+                    if(this.alpha <= 0) this.reset();
+                } else {
+                    this.x += this.vx; this.y += this.vy;
+                    if(this.x<0 || this.x>canvas.width) this.vx*=-1;
+                    if(this.y<0 || this.y>canvas.height) this.vy*=-1;
+                }
+            }
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = '#00f3ff';
+                ctx.beginPath(); ctx.arc(this.x, this.y, 1.2, 0, Math.PI*2); ctx.fill();
+            }
+        }
+
+        for(let i=0; i<70; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        function trigger(el, type) {
+            const rect = el.getBoundingClientRect();
+            const tx = rect.left + rect.width/2;
+            const ty = rect.top + rect.height/2;
+            particles.forEach(p => p.target = {x: tx, y: ty});
+            el.classList.add('active-glow');
+            setTimeout(() => {
+                el.classList.remove('active-glow');
+                particles.forEach(p => p.target = null);
+            }, 800);
+        }
+
+        document.getElementById('profile-trigger').addEventListener('click', function() { trigger(this); });
+    </script>
 </body>
 </html>
