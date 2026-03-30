@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZHAM | Digital Presence</title>
+    <title>ZHAM | Dynamic Atmosphere</title>
     <style>
         :root {
+            /* Standart Neon Void holati */
             --neon: #00f3ff;
             --bg: #050505;
             --glass: rgba(255, 255, 255, 0.03);
+            --title-grad: linear-gradient(to right, #00f3ff, #0088ff);
+            --transition-speed: 0.8s;
+        }
+
+        /* CURRENTS ATMOSFERA (Musiqa yoqqanda aktivlashadi) */
+        body.currents-mode {
+            --neon: #d83a8a; /* Pushti-binafsha */
+            --bg: #0a0a0c;
+            --glass: rgba(216, 58, 138, 0.08);
+            --title-grad: linear-gradient(to right, #f2a93b, #d83a8a, #4b306a);
+            background-image: radial-gradient(circle at center, #1a0b2e 0%, #050505 100%);
         }
 
         * { -webkit-tap-highlight-color: transparent; outline: none; box-sizing: border-box; }
@@ -24,13 +36,13 @@
             justify-content: center;
             min-height: 100vh;
             overflow: hidden;
+            transition: background var(--transition-speed) ease, background-image var(--transition-speed) ease;
         }
 
         canvas { position: fixed; top: 0; left: 0; z-index: -1; pointer-events: none; }
 
         .main-container { max-width: 400px; width: 90%; text-align: center; z-index: 10; margin-top: -30px; }
 
-        /* PROFIL VA NEON WAVE */
         .profile-container {
             position: relative;
             width: 180px; height: 180px;
@@ -48,7 +60,7 @@
             box-shadow: 0 0 20px var(--neon);
             opacity: 0;
             pointer-events: none;
-            transition: transform 0.1s linear, opacity 0.3s;
+            transition: transform 0.1s linear, opacity 0.5s ease, border-color 0.5s ease;
         }
 
         .profile-wrapper {
@@ -59,7 +71,7 @@
             background: var(--bg);
             z-index: 2;
             cursor: pointer;
-            transition: 0.3s ease;
+            transition: transform 0.3s ease, border-color var(--transition-speed) ease;
             overflow: hidden;
         }
         .profile-wrapper img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
@@ -67,43 +79,55 @@
 
         .main-title { 
             font-size: 1.6rem; font-weight: 800; margin-bottom: 30px; 
-            letter-spacing: 2px; text-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+            letter-spacing: 2px;
+            background: var(--title-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: var(--transition-speed) ease;
         }
 
-        /* MENYULAR */
+        /* MENYULAR SMOOTH TRANSITION BILAN */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
         .btn {
             background: var(--glass); border: 1px solid rgba(255,255,255,0.05); 
-            border-radius: 20px; padding: 22px 10px; cursor: pointer; transition: 0.3s;
+            border-radius: 20px; padding: 22px 10px; cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
         }
-        .full-btn { grid-column: span 2; margin-top: 5px; border: 1px solid rgba(0, 243, 255, 0.1); }
-        .btn:active { transform: scale(0.96); border-color: var(--neon); }
+        .btn:hover { border-color: var(--neon); transform: translateY(-2px); }
+        .btn:active { transform: scale(0.96); }
         
         .label { font-size: 0.55rem; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px; letter-spacing: 1px; }
-        .val { font-size: 0.9rem; font-weight: bold; color: var(--neon); letter-spacing: 1px; }
+        .val { font-size: 0.9rem; font-weight: bold; color: var(--neon); letter-spacing: 1px; transition: color var(--transition-speed) ease; }
 
         /* MODAL VIZUALI */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); backdrop-filter: blur(20px); display: none; align-items: center; justify-content: center; z-index: 200; }
-        .modal-content { background: #0a0a0a; width: 88%; max-width: 340px; padding: 30px; border-radius: 25px; border: 1px solid var(--neon); text-align: center; }
-        input, textarea { width: 100%; background: #111; border: 1px solid #222; color: #fff; border-radius: 12px; padding: 12px; margin-top: 10px; outline: none; font-family: inherit; }
-        .timer-display { font-family: monospace; color: var(--neon); font-size: 1.2rem; margin: 10px 0; letter-spacing: 2px; }
-        .modal-btn { margin-top: 20px; background: var(--neon); border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: bold; cursor: pointer; color: #000; }
+        .modal { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.92); backdrop-filter: blur(20px); 
+            display: none; align-items: center; justify-content: center; z-index: 200;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .modal.active { opacity: 1; display: flex; }
+        .modal-content { 
+            background: #0a0a0a; width: 88%; max-width: 340px; padding: 30px; 
+            border-radius: 25px; border: 1px solid var(--neon); text-align: center;
+            transform: translateY(20px); transition: 0.4s ease;
+        }
+        .modal.active .modal-content { transform: translateY(0); }
 
-        .social-links { margin-top: 30px; margin-bottom: 15px; }
-        .social-links a { color: #fff; text-decoration: none; margin: 0 12px; font-size: 0.7rem; font-weight: 900; opacity: 0.4; }
-        .copyright { font-size: 0.55rem; color: #333; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; }
+        .social-links a { color: #fff; text-decoration: none; margin: 0 12px; font-size: 0.7rem; font-weight: 900; opacity: 0.4; transition: 0.3s; }
+        .social-links a:hover { opacity: 1; color: var(--neon); }
     </style>
 </head>
 <body>
 
     <canvas id="particle-canvas"></canvas>
-    <audio id="bg-music" crossorigin="anonymous" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    <audio id="bg-music" crossorigin="anonymous" loop src="https://files.catbox.moe/8m8p9v.mp3"></audio>
 
     <div class="main-container">
         <div class="profile-container">
             <div id="neon-wave" class="neon-wave"></div>
-            <div class="profile-wrapper" onclick="startExperience(event)">
+            <div class="profile-wrapper" onclick="toggleAtmosphere(event)">
                 <img src="IMG_20260329_013912_893.jpg" alt="Jamshid">
             </div>
         </div>
@@ -126,35 +150,14 @@
             <a href="https://t.me/jamwidunvrsl" target="_blank">TELEGRAM</a>
             <a href="https://instagram.com/zham.99" target="_blank">INSTAGRAM</a>
         </div>
-        <p class="copyright">© 2026 JAMWIDUNVRSL | BUILD WITH PASSION</p>
     </div>
 
     <div id="modal-wall" class="modal" onclick="closeModal('modal-wall')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h2 style="color:var(--neon); font-size: 1.1rem;">WALL</h2>
-            <input type="text" id="wall-user" placeholder="Telegram Username">
-            <textarea id="wall-msg" placeholder="Xabaringiz..."></textarea>
-            <button class="modal-btn" onclick="sendToBot('wall')">YUBORISH</button>
-        </div>
-    </div>
-
-    <div id="modal-kapsula" class="modal" onclick="closeModal('modal-kapsula')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 style="color:var(--neon); font-size: 1.1rem;">TIME CAPSULE</h2>
-            <div class="timer-display" id="kapsula-timer">00:00:00:00</div>
-            <input type="text" id="kapsula-user" placeholder="Telegram Username">
-            <textarea id="kapsula-msg" placeholder="Kelajak uchun xabar..."></textarea>
-            <button class="modal-btn" onclick="saveKapsula()">KAPSULAGA SOLISH</button>
-        </div>
-    </div>
-
-    <div id="modal-reminder" class="modal" onclick="closeModal('modal-reminder')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 style="color:var(--neon); font-size: 1.1rem;">ESLATMA</h2>
-            <input type="text" id="rem-id" placeholder="Telegram ID">
-            <input type="datetime-local" id="rem-time">
-            <textarea id="rem-msg" placeholder="Nima haqida eslataylik?"></textarea>
-            <button class="modal-btn" onclick="sendToBot('reminder')">YOQISH</button>
+            <input type="text" id="wall-user" style="width:100%; background:#111; border:1px solid #222; color:#fff; padding:12px; border-radius:12px;" placeholder="Telegram Username">
+            <textarea id="wall-msg" style="width:100%; background:#111; border:1px solid #222; color:#fff; padding:12px; border-radius:12px; margin-top:10px;" placeholder="Xabaringiz..."></textarea>
+            <button onclick="sendToBot('wall')" style="width:100%; background:var(--neon); border:none; padding:14px; border-radius:12px; margin-top:15px; font-weight:bold; cursor:pointer;">YUBORISH</button>
         </div>
     </div>
 
@@ -165,11 +168,12 @@
         let audioCtx, analyser, dataArray, source;
         let isPlaying = false;
 
-        // MUSIQA VA WAVE FUNKSIYASI
-        function startExperience(e) {
+        // ATMOSFERANI O'ZGARTIRISH VA MUSIQA
+        function toggleAtmosphere(e) {
             burstEffect(e);
             const audio = document.getElementById('bg-music');
             const wave = document.getElementById('neon-wave');
+            const body = document.body;
 
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -183,11 +187,13 @@
 
             if (audio.paused) {
                 audio.play();
+                body.classList.add('currents-mode'); // Currents rejimiga o'tish
                 wave.style.opacity = "1";
                 isPlaying = true;
                 animateWave();
             } else {
                 audio.pause();
+                body.classList.remove('currents-mode'); // Neon Void rejimiga qaytish
                 wave.style.opacity = "0";
                 isPlaying = false;
             }
@@ -196,14 +202,12 @@
         function animateWave() {
             if (!isPlaying) return;
             analyser.getByteFrequencyData(dataArray);
-            
-            // O'rtacha chastotani hisoblash (bass qismini ko'proq olish)
             let sum = 0;
             for(let i=0; i<10; i++) sum += dataArray[i];
             let average = sum / 10;
 
-            const scale = 1 + (average / 150); // Kattalashish darajasi
-            const blur = average / 5; // Neon nuri darajasi
+            const scale = 1 + (average / 150);
+            const blur = average / 5;
             
             const wave = document.getElementById('neon-wave');
             wave.style.transform = `scale(${scale})`;
@@ -212,58 +216,34 @@
             requestAnimationFrame(animateWave);
         }
 
-        // --- QOLGAN SERVISLAR (Wall, Kapsula, Reminder) ---
-        function saveKapsula() {
-            const user = document.getElementById('kapsula-user').value;
-            const msg = document.getElementById('kapsula-msg').value;
-            if(!user || !msg) return alert("To'ldiring!");
-            localStorage.setItem('kapsula_data', JSON.stringify({user, msg, date: new Date().toLocaleString()}));
-            alert("Kapsulaga solindi!"); closeModal('modal-kapsula');
+        // --- MODAL SMOOTH TRANSITION ---
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('active'), 10);
         }
 
-        function updateTimer() {
-            const now = new Date().getTime();
-            const cycle = 2 * 24 * 60 * 60 * 1000;
-            const remaining = cycle - (now % cycle);
-            
-            if (remaining <= 1000) {
-                const saved = localStorage.getItem('kapsula_data');
-                if (saved) {
-                    const p = JSON.parse(saved);
-                    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ chat_id: myChatId, text: `⌛ **KAPSULA**\n👤: ${p.user}\n💬: ${p.msg}`})
-                    });
-                    localStorage.removeItem('kapsula_data');
-                }
-            }
-            const d = Math.floor(remaining / 86400000);
-            const h = Math.floor((remaining % 86400000) / 3600000);
-            const m = Math.floor((remaining % 3600000) / 60000);
-            const s = Math.floor((remaining % 60000) / 1000);
-            document.getElementById('kapsula-timer').innerText = `${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('active');
+            setTimeout(() => modal.style.display = 'none', 400);
         }
-        setInterval(updateTimer, 1000);
 
+        // --- BOT FUNKSIYALARI (O'zgarmadi) ---
         async function sendToBot(type) {
-            let text = ""; let modalId = "";
+            let text = ""; 
             if(type === 'wall') {
                 text = `🚀 **WALL**\n👤: ${document.getElementById('wall-user').value}\n💬: ${document.getElementById('wall-msg').value}`;
-                modalId = 'modal-wall';
-            } else if(type === 'reminder') {
-                text = `🔔 **ESLATMA**\n🆔: ${document.getElementById('rem-id').value}\n⏰: ${document.getElementById('rem-time').value}\n📝: ${document.getElementById('rem-msg').value}`;
-                modalId = 'modal-reminder';
             }
             await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ chat_id: myChatId, text: text })
             });
-            alert("Yuborildi!"); closeModal(modalId);
+            alert("Yuborildi!"); closeModal('modal-wall');
         }
 
-        // --- ZARRACHALAR ---
+        // --- ZARRACHALAR (Rang dinamik o'zgaradi) ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -279,7 +259,11 @@
                 this.alpha = 1; this.life = isBurst ? 0.02 : 0.005;
             }
             update() { this.x += this.vx; this.y += this.vy; this.alpha -= this.life; }
-            draw() { ctx.globalAlpha = this.alpha; ctx.fillStyle = '#00f3ff'; ctx.beginPath(); ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2); ctx.fill(); }
+            draw() { 
+                ctx.globalAlpha = this.alpha; 
+                ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--neon'); 
+                ctx.beginPath(); ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2); ctx.fill(); 
+            }
         }
         function animate() {
             ctx.clearRect(0,0,canvas.width, canvas.height);
@@ -293,8 +277,6 @@
             const rect = document.querySelector('.profile-wrapper').getBoundingClientRect();
             for(let i=0; i<30; i++) particles.push(new Particle(rect.left + 75, rect.top + 75, true));
         }
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
 </body>
 </html>
