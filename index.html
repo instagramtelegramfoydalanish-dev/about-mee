@@ -10,6 +10,18 @@
             --bg: #050505;
             --glass: rgba(255, 255, 255, 0.03);
         }
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZHAM | Digital Presence</title>
+    <style>
+        :root {
+            --neon: #00f3ff;
+            --bg: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
 
         * { -webkit-tap-highlight-color: transparent; outline: none; box-sizing: border-box; }
 
@@ -28,11 +40,120 @@
 
         canvas { position: fixed; top: 0; left: 0; z-index: -1; pointer-events: none; }
 
-        .main-container { max-width: 400px; width: 90%; text-align: center; z-index: 10; }
+        .main-container { max-width: 400px; width: 90%; text-align: center; z-index: 10; margin-top: -50px; }
 
+        /* PROFIL - KATTALASHTIRILGAN VA YUQORIGA KO'TARILGAN */
         .profile-wrapper {
-            width: 120px; height: 120px;
-            margin: 0 auto 20px;
+            width: 150px; height: 150px; /* Kattalashtirildi */
+            margin: 0 auto 25px; /* Pastki masofa biroz ko'paytirildi */
+            border-radius: 50%;
+            border: 2px solid var(--neon);
+            padding: 5px;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+            cursor: pointer;
+            transition: 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        .profile-wrapper img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .profile-wrapper:active { 
+            transform: scale(0.92); 
+            box-shadow: 0 0 60px var(--neon);
+        }
+
+        .main-title { 
+            font-size: 1.8rem; font-weight: 800; margin-bottom: 35px; 
+            letter-spacing: 2px; text-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+            cursor: default;
+        }
+
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px; }
+        .btn {
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.05); 
+            border-radius: 22px; padding: 22px 10px; cursor: pointer; transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .btn:active { 
+            transform: scale(0.96); 
+            border-color: rgba(0, 243, 255, 0.2); 
+            background: rgba(0, 243, 255, 0.02);
+            filter: brightness(0.7);
+        }
+        .label { font-size: 0.6rem; color: #555; text-transform: uppercase; display: block; margin-bottom: 5px; letter-spacing: 1px; }
+        .val { font-size: 1rem; font-weight: bold; color: var(--neon); letter-spacing: 1px; }
+
+        .social-links { margin-bottom: 20px; }
+        .social-links a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 0.75rem; font-weight: 900; opacity: 0.4; transition: 0.3s; }
+        .social-links a:hover { opacity: 1; color: var(--neon); }
+        .copyright { font-size: 0.6rem; color: #333; letter-spacing: 1.5px; text-transform: uppercase; font-weight: bold; }
+
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); display: none; align-items: center; justify-content: center; z-index: 200; }
+        .modal-content { background: #0a0a0a; width: 85%; max-width: 320px; padding: 35px; border-radius: 30px; border: 1px solid var(--neon); text-align: center; }
+    </style>
+</head>
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="main-container">
+        <div class="profile-wrapper" onclick="burstEffect(event)">
+            <img src="IMG_20260329_013912_893.jpg" alt="Jamshid">
+        </div>
+        
+        <h1 class="main-title">JAMSHID ABLAKIMOV</h1>
+
+        <div class="menu-grid">
+            <div class="btn" onclick="openModal('modal-wall')">
+                <span class="label">Fikrlar uchun</span><span class="val">WALL</span>
+            </div>
+            <div class="btn" onclick="openModal('modal-kapsula')">
+                <span class="label">Vaqt uchun</span><span class="val">KAPSULA</span>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="https://t.me/jamwidunvrsl" target="_blank">TELEGRAM</a>
+            <a href="https://instagram.com/zham.99" target="_blank">INSTAGRAM</a>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZHAM | Digital Presence</title>
+    <style>
+        :root {
+            --neon: #00f3ff;
+            --bg: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        * { -webkit-tap-highlight-color: transparent; outline: none; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        canvas { position: fixed; top: 0; left: 0; z-index: -1; pointer-events: none; }
+
+        .main-container { max-width: 400px; width: 90%; text-align: center; z-index: 10; margin-top: -50px; }
+
+        /* PROFIL - KATTALASHTIRILGAN VA YUQORIGA KO'TARILGAN */
+        .profile-wrapper {
+            width: 150px; height: 150px; /* Kattalashtirildi */
+            margin: 0 auto 25px; /* Pastki masofa biroz ko'paytirildi */
             border-radius: 50%;
             border: 2px solid var(--neon);
             padding: 5px;
@@ -171,10 +292,10 @@
         animate();
 
         function burstEffect(e) {
-            const rect = e.target.getBoundingClientRect();
+            const rect = document.querySelector('.profile-wrapper').getBoundingClientRect();
             const x = rect.left + rect.width / 2;
             const y = rect.top + rect.height / 2;
-            for(let i=0; i<20; i++) {
+            for(let i=0; i<30; i++) {
                 particles.push(new Particle(x, y, true));
             }
         }
