@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZHAM | Digital Architect</title>
+    <title>ZHAM | Neon Void</title>
     <style>
         :root {
             --neon: #00f3ff;
             --bg: #050505;
-            --glass: rgba(255, 255, 255, 0.03);
+            --glass: rgba(255, 255, 255, 0.05);
         }
 
         body {
@@ -18,12 +18,12 @@
             margin: 0;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
         }
 
+        /* FON ZARRACHALARI */
         #particle-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -46,30 +46,17 @@
         }
 
         .profile-img {
-            width: 100px;
-            height: 100px;
+            width: 100px; height: 100px;
             border-radius: 50%;
             border: 2px solid var(--neon);
             padding: 5px;
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+            box-shadow: 0 0 20px var(--neon);
             object-fit: cover;
             cursor: pointer;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        h1 { font-size: 22px; margin: 15px 0 5px; letter-spacing: 1px; }
-        .role { color: var(--neon); font-size: 11px; letter-spacing: 3px; margin-bottom: 25px; text-transform: uppercase; font-weight: 300; }
-
-        /* SKILLS (MAHORATLAR) */
-        .skills-container {
-            text-align: left;
-            margin-bottom: 25px;
-        }
-
-        .skill-item { margin-bottom: 12px; }
-        .skill-label { font-size: 10px; color: #888; margin-bottom: 4px; display: flex; justify-content: space-between; }
-        .skill-bar-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; }
-        .skill-bar-fill { height: 100%; background: var(--neon); box-shadow: 0 0 10px var(--neon); border-radius: 2px; }
+        h1 { font-size: 22px; margin: 15px 0 5px; }
+        .role { color: var(--neon); font-size: 11px; letter-spacing: 3px; margin-bottom: 25px; text-transform: uppercase; }
 
         /* IJTIMOIY TUGMALAR */
         .social-row {
@@ -88,15 +75,45 @@
             text-decoration: none;
             font-size: 10px;
             font-weight: bold;
-            letter-spacing: 1px;
             transition: 0.3s;
         }
 
-        .social-link:active { background: var(--neon); color: black; box-shadow: 0 0 20px var(--neon); }
+        /* MODAL OYNALAR (KAPSULA VA WALL UCHUN) */
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(15px);
+            display: none; /* Dastlab yopiq */
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
 
-        .passion { font-size: 9px; color: #444; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; }
+        .modal-content {
+            background: var(--glass);
+            width: 80%;
+            max-width: 300px;
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid var(--neon);
+            text-align: center;
+            box-shadow: 0 0 30px var(--neon);
+        }
 
-        /* NAVIGATSIYA */
+        .close-btn {
+            margin-top: 20px;
+            background: var(--neon);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* PASTKI NAVIGATSIYA */
         .bottom-nav {
             position: fixed;
             bottom: 30px;
@@ -116,15 +133,12 @@
             text-align: center;
             backdrop-filter: blur(10px);
             cursor: pointer;
-            transition: 0.3s;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        .btn-title { display: block; font-weight: bold; font-size: 13px; color: var(--neon); letter-spacing: 1px; }
+        .btn-title { display: block; font-weight: bold; font-size: 13px; color: var(--neon); }
         .btn-desc { font-size: 9px; color: #777; margin-top: 3px; }
 
         .active-glow { box-shadow: 0 0 40px var(--neon) !important; transform: scale(0.96); }
-
     </style>
 </head>
 <body>
@@ -132,45 +146,46 @@
     <canvas id="particle-canvas"></canvas>
 
     <div class="card">
-        <img src="IMG_20260329_013912_893.jpg" class="profile-img" id="profile-trigger">
+        <img src="IMG_20260329_013912_893.jpg" class="profile-img" onclick="trigger(this)">
         <h1>Jamshid Ablakimov</h1>
         <div class="role">UI/UX & Video Editor</div>
-
-        <div class="skills-container">
-            <div class="skill-item">
-                <div class="skill-label"><span>UI/UX DESIGN</span><span>90%</span></div>
-                <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 90%"></div></div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-label"><span>VIDEO EDITING</span><span>85%</span></div>
-                <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 85%"></div></div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-label"><span>DEVELOPMENT</span><span>75%</span></div>
-                <div class="skill-bar-bg"><div class="skill-bar-fill" style="width: 75%"></div></div>
-            </div>
-        </div>
-
+        
         <div class="social-row">
             <a href="https://t.me/jamwid_unvrsl" class="social-link" onclick="trigger(this)">TELEGRAM</a>
             <a href="https://instagram.com/zham.99" class="social-link" onclick="trigger(this)">INSTAGRAM</a>
         </div>
+        <div style="font-size: 9px; color: #444; letter-spacing: 2px;">© 2026 JAMSHID.UNVRSL BUILD WITH PASSION</div>
+    </div>
 
-        <div class="passion">© 2026 JAMSHID.UNVRSL BUILD WITH PASSION</div>
+    <div id="modal-kapsula" class="modal">
+        <div class="modal-content">
+            <h2 style="color: var(--neon);">KAPSULA</h2>
+            <p style="font-size: 14px;">Kelajak uchun xabar qoldirish tizimi yaqinda ishga tushadi.</p>
+            <button class="close-btn" onclick="closeModal('modal-kapsula')">YOPISH</button>
+        </div>
+    </div>
+
+    <div id="modal-wall" class="modal">
+        <div class="modal-content">
+            <h2 style="color: var(--neon);">WALL</h2>
+            <p style="font-size: 14px;">Anonim fikrlar devori tayyorlanmoqda.</p>
+            <button class="close-btn" onclick="closeModal('modal-wall')">YOPISH</button>
+        </div>
     </div>
 
     <div class="bottom-nav">
-        <div class="nav-btn" onclick="trigger(this, 'KAPSULA')">
+        <div class="nav-btn" onclick="openModal('modal-kapsula', this)">
             <span class="btn-title">KAPSULA</span>
-            <span class="btn-desc">Future Message</span>
+            <span class="btn-desc">Kelajakka xat</span>
         </div>
-        <div class="nav-btn" onclick="trigger(this, 'WALL')">
+        <div class="nav-btn" onclick="openModal('modal-wall', this)">
             <span class="btn-title">WALL</span>
-            <span class="btn-desc">Anonymous Wall</span>
+            <span class="btn-desc">Anonim devor</span>
         </div>
     </div>
 
     <script>
+        // ZARRACHALAR LOGIKASI
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -197,13 +212,10 @@
                     if(this.alpha <= 0) this.reset();
                 } else {
                     this.x += this.vx; this.y += this.vy;
-                    if(this.x<0 || this.x>canvas.width) this.vx*=-1;
-                    if(this.y<0 || this.y>canvas.height) this.vy*=-1;
                 }
             }
             draw() {
-                ctx.globalAlpha = this.alpha;
-                ctx.fillStyle = '#00f3ff';
+                ctx.globalAlpha = this.alpha; ctx.fillStyle = '#00f3ff';
                 ctx.beginPath(); ctx.arc(this.x, this.y, 1.2, 0, Math.PI*2); ctx.fill();
             }
         }
@@ -217,19 +229,33 @@
         }
         animate();
 
-        function trigger(el, type) {
+        // OYNALARNI BOSHQARISH
+        function openModal(id, btn) {
+            // Zarrachalarni tugmaga yig'ish
+            const rect = btn.getBoundingClientRect();
+            particles.forEach(p => p.target = {x: rect.left + rect.width/2, y: rect.top + rect.height/2});
+            
+            btn.classList.add('active-glow');
+            setTimeout(() => {
+                document.getElementById(id).style.display = 'flex';
+                btn.classList.remove('active-glow');
+                particles.forEach(p => p.target = null);
+            }, 600);
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function trigger(el) {
             const rect = el.getBoundingClientRect();
-            const tx = rect.left + rect.width/2;
-            const ty = rect.top + rect.height/2;
-            particles.forEach(p => p.target = {x: tx, y: ty});
+            particles.forEach(p => p.target = {x: rect.left + rect.width/2, y: rect.top + rect.height/2});
             el.classList.add('active-glow');
             setTimeout(() => {
                 el.classList.remove('active-glow');
                 particles.forEach(p => p.target = null);
             }, 800);
         }
-
-        document.getElementById('profile-trigger').addEventListener('click', function() { trigger(this); });
     </script>
 </body>
 </html>
