@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZHAM | Portfolio</title>
+    <title>ZHAM | Digital Presence</title>
     <style>
         :root {
             --neon: #00f3ff;
             --bg: #050505;
-            --text: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
         }
 
         * { -webkit-tap-highlight-color: transparent; outline: none; box-sizing: border-box; }
 
         body {
             background-color: var(--bg);
-            color: var(--text);
+            color: white;
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
             display: flex;
@@ -30,33 +30,51 @@
 
         .main-container { max-width: 400px; width: 90%; text-align: center; z-index: 10; }
 
-        /* PROFIL */
-        .profile-img { 
-            width: 120px; height: 120px; border-radius: 40px; 
-            border: 2px solid var(--neon); box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
-            transition: 0.5s ease; cursor: pointer; margin-bottom: 20px;
+        /* PROFIL - RASM CHO'ZILMASLIGI UCHUN */
+        .profile-wrapper {
+            width: 120px; height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 2px solid var(--neon);
+            padding: 5px;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+            cursor: pointer;
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
         }
-        .main-title { font-size: 2rem; font-weight: 800; margin-bottom: 30px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+        .profile-wrapper img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover; /* MUHIM: Rasm asl holini saqlaydi */
+        }
+        .profile-wrapper:active { transform: scale(0.95); box-shadow: 0 0 50px var(--neon); }
+
+        .main-title { 
+            font-size: 1.8rem; font-weight: 800; margin-bottom: 35px; 
+            letter-spacing: 2px; text-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+            cursor: default;
+        }
 
         /* TUGMALAR */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px; }
         .btn {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); 
-            border-radius: 20px; padding: 20px; cursor: pointer; transition: 0.4s;
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.05); 
+            border-radius: 22px; padding: 22px 10px; cursor: pointer; transition: 0.4s;
             backdrop-filter: blur(10px);
         }
-        .btn:active { transform: scale(0.95); border-color: var(--neon); }
-        .label { font-size: 0.6rem; color: #666; text-transform: uppercase; display: block; margin-bottom: 5px; }
-        .val { font-size: 1rem; font-weight: bold; color: var(--neon); }
+        .btn:active { transform: scale(0.95); border-color: var(--neon); background: rgba(0, 243, 255, 0.05); }
+        .label { font-size: 0.6rem; color: #555; text-transform: uppercase; display: block; margin-bottom: 5px; letter-spacing: 1px; }
+        .val { font-size: 1rem; font-weight: bold; color: var(--neon); letter-spacing: 1px; }
 
         /* FOOTER */
         .social-links { margin-bottom: 20px; }
-        .social-links a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 0.7rem; font-weight: bold; opacity: 0.5; }
-        .copyright { font-size: 0.6rem; color: #444; letter-spacing: 1px; text-transform: uppercase; }
+        .social-links a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 0.75rem; font-weight: 900; opacity: 0.4; transition: 0.3s; }
+        .social-links a:hover { opacity: 1; color: var(--neon); }
+        .copyright { font-size: 0.6rem; color: #333; letter-spacing: 1.5px; text-transform: uppercase; font-weight: bold; }
 
         /* MODAL */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(20px); display: none; align-items: center; justify-content: center; z-index: 200; }
-        .modal-content { background: #0a0a0a; width: 85%; max-width: 300px; padding: 30px; border-radius: 25px; border: 1px solid var(--neon); text-align: center; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); display: none; align-items: center; justify-content: center; z-index: 200; }
+        .modal-content { background: #0a0a0a; width: 85%; max-width: 320px; padding: 35px; border-radius: 30px; border: 1px solid var(--neon); text-align: center; }
     </style>
 </head>
 <body>
@@ -64,37 +82,41 @@
     <canvas id="particle-canvas"></canvas>
 
     <div class="main-container">
-        <img src="IMG_20260329_013912_893.jpg" class="profile-img" onclick="triggerEffect(event)">
+        <div class="profile-wrapper" onclick="triggerEffect(event)">
+            <img src="IMG_20260329_013912_893.jpg" alt="Jamshid">
+        </div>
+        
         <h1 class="main-title" onclick="triggerEffect(event)">JAMSHID ABLAKIMOV</h1>
 
         <div class="menu-grid">
             <div class="btn" onclick="openModal('modal-wall', event)">
-                <span class="label">Anonim xabar</span><span class="val">WALL</span>
+                <span class="label">Fikrlar uchun</span><span class="val">WALL</span>
             </div>
             <div class="btn" onclick="openModal('modal-kapsula', event)">
-                <span class="label">Yaqin kelajakda bu habarni jamshid o'qiydi</span><span class="val">KAPSULA</span>
+                <span class="label">Vaqt uchun</span><span class="val">KAPSULA</span>
             </div>
         </div>
 
         <div class="social-links">
-            <a href="https://t.me/jamwidunvrsl">TELEGRAM</a>
-            <a href="https://instagram.com/zham.99">INSTAGRAM</a>
+            <a href="https://t.me/jamwidunvrsl" target="_blank">TELEGRAM</a>
+            <a href="https://instagram.com/zham.99" target="_blank">INSTAGRAM</a>
         </div>
         <p class="copyright">© 2026 JAMWIDUNVRSL | BUILD WITH PASSION</p>
     </div>
 
     <div id="modal-wall" class="modal" onclick="closeModal('modal-wall')">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 style="color:var(--neon)">WALL</h2>
-            <textarea id="wall-msg" placeholder="Xabaringiz..." style="width:100%; height:80px; background:#111; border:1px solid #333; color:#fff; border-radius:10px; padding:10px; resize:none;"></textarea>
-            <button onclick="sendWall()" style="margin-top:15px; background:var(--neon); border:none; width:100%; padding:10px; border-radius:10px; font-weight:bold; cursor:pointer;">YUBORISH</button>
+            <h2 style="color:var(--neon); font-size: 1.2rem; letter-spacing: 2px;">WALL</h2>
+            <textarea id="wall-msg" placeholder="Xabaringiz..." style="width:100%; height:100px; background:#111; border:1px solid #222; color:#fff; border-radius:15px; padding:15px; outline:none; resize:none; font-family: inherit;"></textarea>
+            <button onclick="sendWall()" style="margin-top:20px; background:var(--neon); border:none; width:100%; padding:14px; border-radius:15px; font-weight:bold; cursor:pointer; color:#000;">YUBORISH</button>
         </div>
     </div>
 
     <div id="modal-kapsula" class="modal" onclick="closeModal('modal-kapsula')">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 style="color:var(--neon)">KAPSULA</h2>
-            <p>Tez kunda ishga tushadi...</p>
+            <h2 style="color:var(--neon); font-size: 1.2rem; letter-spacing: 2px;">KAPSULA</h2>
+            <p style="color: #666; font-size: 0.85rem;">Bu bo'lim kelajakka xabar yuborish uchun mo'ljallangan. Tez kunda ishga tushadi.</p>
+            <button onclick="closeModal('modal-kapsula')" style="margin-top:20px; background:var(--neon); border:none; width:100%; padding:14px; border-radius:15px; font-weight:bold; cursor:pointer; color:#000;">YOPISH</button>
         </div>
     </div>
 
@@ -110,13 +132,14 @@
             constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.3; this.vy = (Math.random() - 0.5) * 0.3;
+                this.vx = (Math.random() - 0.5) * 0.4; this.vy = (Math.random() - 0.5) * 0.4;
                 this.alpha = Math.random() * 0.4 + 0.1; this.target = null;
             }
             update() {
                 if(this.target) {
-                    this.x += (this.target.x - this.x) * 0.08; this.y += (this.target.y - this.y) * 0.08;
-                    this.alpha -= 0.015; if(this.alpha <= 0) this.reset();
+                    this.x += (this.target.x - this.x) * 0.1; 
+                    this.y += (this.target.y - this.y) * 0.1;
+                    this.alpha -= 0.012; if(this.alpha <= 0) this.reset();
                 } else {
                     this.x += this.vx; this.y += this.vy;
                     if(this.x<0 || this.x>canvas.width) this.vx*=-1; if(this.y<0 || this.y>canvas.height) this.vy*=-1;
@@ -125,7 +148,7 @@
             draw() { ctx.globalAlpha = this.alpha; ctx.fillStyle = '#00f3ff'; ctx.beginPath(); ctx.arc(this.x, this.y, 1.2, 0, Math.PI*2); ctx.fill(); }
         }
 
-        for(let i=0; i<80; i++) particles.push(new Particle());
+        for(let i=0; i<85; i++) particles.push(new Particle());
 
         function animate() {
             ctx.clearRect(0,0,canvas.width, canvas.height);
@@ -138,19 +161,20 @@
             let x = e.touches ? e.touches[0].clientX : e.clientX;
             let y = e.touches ? e.touches[0].clientY : e.clientY;
             particles.forEach(p => p.target = { x: x, y: y });
-            setTimeout(() => particles.forEach(p => p.target = null), 1000);
+            setTimeout(() => particles.forEach(p => p.target = null), 800);
         }
 
         window.addEventListener('mousedown', triggerEffect);
         window.addEventListener('touchstart', triggerEffect);
 
-        function openModal(id, e) { e.stopPropagation(); triggerEffect(e); document.getElementById(id).style.display = 'flex'; }
+        function openModal(id, e) { triggerEffect(e); setTimeout(() => { document.getElementById(id).style.display = 'flex'; }, 350); }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         
         function sendWall() {
             const msg = document.getElementById('wall-msg').value;
             if(!msg) return;
-            alert("Yuborildi!"); closeModal('modal-wall');
+            alert("Xabaringiz qabul qilindi!"); closeModal('modal-wall');
+            document.getElementById('wall-msg').value = "";
         }
     </script>
 </body>
